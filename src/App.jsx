@@ -6,7 +6,9 @@ import Spatial from "./components/task-commpost_run-01_desc-carpetplot_bold";
 import Surface from "./components/task-commpost_run-01_desc-compcorvar_bold";
 import Alignment from "./components/space-MNI152NLin2009cAsym_T1w";
 import Mask from "./components/dseg";
-// import Plot from "./components/Plot";
+import Confound from "./components/task-commpost_run-01_desc-confoundcorr_bold";
+import Rois from "./components/task-commpost_run-01_desc-rois_bold";
+import CarpetPlot from "./components/task-commpre_run-01_desc-carpetplot_bold"; // Added CarpetPlot component
 
 export default function App() {
   const [data, setData] = useState("selectTheData");
@@ -16,6 +18,9 @@ export default function App() {
   const [surfaceContentVisible, setSurfaceContentVisible] = useState(false);
   const [alignmentContentVisible, setAlignmentContentVisible] = useState(false);
   const [maskContentVisible, setMaskContentVisible] = useState(false);
+  const [confoundContentVisible, setConfoundContentVisible] = useState(false);
+  const [roisContentVisible, setRoisContentVisible] = useState(false);
+  const [carpetPlotContentVisible, setCarpetPlotContentVisible] = useState(false); // Added state for CarpetPlot component
 
   useEffect(() => {
     setBrainContentVisible(data === "desc_reconall_T1w");
@@ -23,6 +28,9 @@ export default function App() {
     setSurfaceContentVisible(data === "task-commpost_run-01_desc-compcorvar_bold");
     setAlignmentContentVisible(data === "space-MNI152NLin2009cAsym_T1w");
     setMaskContentVisible(data === "dseg");
+    setConfoundContentVisible(data === "task-commpost_run-01_desc-confoundcorr_bold");
+    setRoisContentVisible(data === "task-commpost_run-01_desc-rois_bold");
+    setCarpetPlotContentVisible(data === "task-commpre_run-01_desc-carpetplot_bold"); // Added condition for CarpetPlot component
   }, [data]);
 
   const handleOnChange = (e) => {
@@ -47,9 +55,12 @@ export default function App() {
           <option value="selectTheData">Select your choice of data</option>
           <option value="desc_reconall_T1w">desc_reconall_T1w</option>
           <option value="task-commpost_run-01_desc-carpetplot_bold">task-commpost_run-01_desc-carpetplot_bold</option>
-          <option value="task-commpost_run-01_desc-compcorvar_bold">task-commpost_run-01_desc-compcorvar_bold</option>
+          <option value="task-commpost_run-01_desc-compcorvar_bold">Surface reconstruction</option>
           <option value="space-MNI152NLin2009cAsym_T1w">space-MNI152NLin2009cAsym_T1w</option>
           <option value="dseg">dseg</option>
+          <option value="task-commpost_run-01_desc-confoundcorr_bold">Confound correction</option>
+          <option value="task-commpost_run-01_desc-rois_bold">Rois</option>
+          <option value="task-commpre_run-01_desc-carpetplot_bold">CarpetPlot</option> {/* Added CarpetPlot option */}
         </select>
       </div>
       {brainContentVisible && <Brain />}
@@ -57,6 +68,10 @@ export default function App() {
       {surfaceContentVisible && <Surface />}
       {alignmentContentVisible && <Alignment />}
       {maskContentVisible && <Mask />}
+      {confoundContentVisible && <Confound />}
+      {roisContentVisible && <Rois />}
+      {carpetPlotContentVisible && <CarpetPlot />} {/* Added CarpetPlot component */}
     </div>
   );
 }
+
