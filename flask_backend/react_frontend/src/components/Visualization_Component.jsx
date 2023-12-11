@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import rot from "../../../rotations_plot.png";
-import trans from "../../../translations_plot.png";
-import frame from "../../../framewise_plot.png";
+import rot from "/Users/claudiapascual/CS178A_Project/course-project-bic/flask_backend/app/static/images/rotations_plot.png";
+import trans from "/Users/claudiapascual/CS178A_Project/course-project-bic/flask_backend/app/static/images/translations_plot.png";
+import frame from "/Users/claudiapascual/CS178A_Project/course-project-bic/flask_backend/app/static/images/framewise_plot.png";
 const VisualizationComponent = () => {
   const [plots, setPlots] = useState({});
 

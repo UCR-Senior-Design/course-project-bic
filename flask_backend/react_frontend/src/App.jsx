@@ -8,7 +8,7 @@ import Alignment from "./components/Alignment";
 import Mask from "./components/Mask";
 import GraphSelector from './components/Visualizations';
 import Visualization_Component from './components/Visualization_Component';
-
+import Selector_Visualization from './components/Selector_Visualizations';
 export default function App() {
   const [data, setData] = useState("selectTheData");
 
@@ -78,15 +78,18 @@ export default function App() {
       {surfaceContentVisible && <Surface />}
       {alignmentContentVisible && <Alignment />}
       {maskContentVisible && <Mask />}
-<div>
+     {/*<div> 
       <h1>Graph Application</h1>
       <GraphSelector onGraphSelect={handleGraphSelect} />
       {/* Other components and content */}
   <div>
     <Visualization_Component/>
   </div>
+  <div>
+    <Selector_Visualization/>
+  </div>
     </div>
-    </div>
+    
   );
   }
 
