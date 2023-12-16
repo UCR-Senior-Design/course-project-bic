@@ -10,10 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-=======
-    "axios": "^1.6.2",
->>>>>>> 368829441b0ff24df615780319458f1adfc4d194
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -22,10 +18,6 @@
     "@types/react-dom": "^18.0.10",
     "@vitejs/plugin-react": "^3.1.0",
     "concurrently": "^8.2.2",
-<<<<<<< HEAD
     "vite": "^4.5.1"
-=======
-    "vite": "^4.5.0"
->>>>>>> 368829441b0ff24df615780319458f1adfc4d194
   }
 }

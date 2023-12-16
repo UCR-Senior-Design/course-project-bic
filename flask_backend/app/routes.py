@@ -18,11 +18,7 @@ def list_files():
 def generate_plots():
     plt.switch_backend('Agg')  # Use non-interactive mode
 
-<<<<<<< HEAD
     data_path = '/Users/claudiapascual/tester/course-project-bic/flask_backend/app/sub-01_task-commpre_run-01_desc-confounds_timeseries.tsv'
-=======
-    data_path = '/Users/claudiapascual/CS178A_Project/course-project-bic/flask_backend/app/sub-01_task-commpre_run-01_desc-confounds_timeseries.tsv'
->>>>>>> 368829441b0ff24df615780319458f1adfc4d194
     graphs = Visualizations(data_path)
 
     # Create plots and save to files
