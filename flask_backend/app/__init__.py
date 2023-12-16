@@ -11,4 +11,7 @@ def create_app():
     from .routes import visualizations_routes
     app.register_blueprint(visualizations_routes, url_prefix='/visualizations')
     
+    #from .routes import file_routes
+    #app.register_blueprint(file_routes, url_prefix='/files')
+
     return app
