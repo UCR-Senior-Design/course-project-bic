@@ -1,20 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-const File_Viewer = () => {
-    const [fileUrl, setFileUrl] = useState('');
+const FileViewer = ({ onSelectFile }) => {
+  const [files, setFiles] = useState([]);
 
-    useEffect(() => {
-        // Replace 'your-flask-api-url' with the actual URL of your Flask API
-        fetch('your-flask-api-url/get_signed_url?file_name=example.txt')
-            .then(response => response.json())
-            .then(data => setFileUrl(data.signed_url));
-    }, []);
+  useEffect(() => {
+    axios.get('/list_files')
+      .then(response => setFiles(response.data.files))
+      .catch(error => console.error('Error fetching files:', error));
+  }, []);
 
-    return (
-        <div>
-            {fileUrl && <img src={fileUrl} alt="File" />}
-        </div>
-    );
+  return (
+    <div>
+      <h2>Select a File</h2>
+      <ul>
+        {files.map(file => (
+          <li key={file} onClick={() => onSelectFile(file)}>{file}</li>
+        ))}
+      </ul>
+    </div>
+  );
 };
 
-export default File_Viewer;
+export default FileViewer;
