@@ -1,8 +1,5 @@
 Senior Design Project (Team BIC)
-## Neuroimaging Data Processing and Visualization Pipeline
-
-
-# README: Running fMRIPrep on GCP VM Instance
+# README: Neuroimaging Data Processing and Visualization Pipeline
 
 This guide provides instructions on running fMRIPrep on a Google Cloud Platform (GCP) Virtual Machine (VM) instance. The necessary dependencies, including fMRIPrep, FreeSurfer, and FSL, was installed on the VM by Professor Ballard.
 
