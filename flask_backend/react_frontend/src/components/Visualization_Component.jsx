@@ -25,29 +25,21 @@ const VisualizationComponent = () => {
       <button onClick={handleGeneratePlots}>Generate Plots</button>
 
       <div>
-      {plots.rotations && (
-          <h2>Rotations Plot</h2>
-        )}
-     
+        <h2>Rotations Plot</h2>
         {plots.rotations && (
           <img src={rot} alt="Rotations Plot" />
         )}
       </div>
 
       <div>
-      {plots.translations && (
-          <h2>Translations Plot</h2>
-        )}
-        
+        <h2>Translations Plot</h2>
         {plots.translations && (
           <img src={trans} alt="Translations Plot" />
         )}
       </div>
 
       <div>
-      {plots.framewise&& (
         <h2>Framewise Displacement Plot</h2>
-        )}
         {plots.framewise && (
           <img src={frame} alt="Framewise Displacement Plot" />
         )}
