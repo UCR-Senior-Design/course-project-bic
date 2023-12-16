@@ -21,6 +21,26 @@ Senior Design Project (Team BIC)
  * Make sure to download and install the Xquartz 2.8.2 release from https://www.xquartz.org before installing Freesurfer.
  * On the above link, click the 7.X_releases link. From there, scroll down to 7.3.2 release.
  * Install the last link from the 7.3.2 release which is: freesurfer-darwin-macOS-7.3.2.pkg.
- * 
 
+ * 
+## To run website:
+Go to cd flask_backend
+1. Create a Virtual Environment
+   On Mac:
+   python3 -m venv env
+   On Windows:
+   python -m venv env
+2. Activate Virtual Environment
+   On Mac:
+   source env/bin/activate
+   On windows:
+   .\env\Scripts\activate
+3. Install Requirements
+   pip install -r requirements.txt
+4. Next NPM Install
+   npm install
+   npm install --save-dev concurrently
+5. Run it all
+   npm start
+   
 
