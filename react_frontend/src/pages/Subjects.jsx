@@ -45,6 +45,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Alert } from 'react-bootstrap'; // Import Alert from react-bootstrap
 import { useParams } from 'react-router-dom';
+import './Subjects.css'
 
 const Subjects = () => {
   const { subjectFolder } = useParams();
