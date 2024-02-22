@@ -29,11 +29,11 @@ def get_figures():
         parts = figure.split('_')
         if 'task-' in parts[1]:
             task = parts[1]
-            name = parts[3].replace('.svg', '')
+            name = f"{parts[3]}_{parts[4]}".replace('.svg', '')
             fullName = f"{parts[1]}_{parts[3]}".replace('.svg', '')
             
         else:
-            task = 'none'
+            task = 'other'
             name = '_'.join(parts[1:]).replace('.svg', '')
             fullName = '_'.join(parts[1:]).replace('.svg', '')
         

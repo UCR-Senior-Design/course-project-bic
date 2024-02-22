@@ -1,12 +1,14 @@
 import './App.css';
 import Sidebar from './components/Sidebar';
+import Header from './components/Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Subjects from './pages/Subjects';
 import Figures from './pages/Figures';
-import Header from './components/Header';
 import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
 import About from "./pages/About";
+
+
 
 function App() {
   return (
