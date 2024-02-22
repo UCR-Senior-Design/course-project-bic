@@ -12,9 +12,9 @@ const Header = () => {
       <h1 className="title">fMRI Data Outputs</h1>
       <div className="navigation">
         <input type="text" placeholder="Search..." className="search-bar" />
-        <Link to="/welcome" className="welcome-link">Welcome</Link>
-        <Link to="/home" className="home-link">Home</Link>
-        <Link to="/about" className="about-link">About</Link>
+        <a href="/welcome" className="welcome-link">Welcome</a>
+        <a href="/home" className="home-link">Home</a>
+        <a href="/about" className="about-link">About</a>
       </div>
     </div>
   );
