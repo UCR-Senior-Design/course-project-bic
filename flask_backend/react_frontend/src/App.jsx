@@ -8,7 +8,7 @@ import Header from './components/Header';
 function App() {
   return (
     <Router>
-      <Header title="Your App Title" />
+      <Header />
       <Sidebar />
       <Routes>
         <Route path='/subjects/:subjectFolder' element={<Subjects />} /> 

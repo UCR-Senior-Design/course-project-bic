@@ -3,16 +3,15 @@
     color: #fff;
     padding: 0px 20px;
     height: 60px;
-    width: calc(100vw - 40px);
+    width: 100%; /* Ensure the header spans the entire width */
     position: fixed;
     top: 0;
-    left: 0;
-    right: 0;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+    padding-left: 20px; /* Adjust padding to create space on the left */
+  }
   
 .title {
     margin: 0; 
