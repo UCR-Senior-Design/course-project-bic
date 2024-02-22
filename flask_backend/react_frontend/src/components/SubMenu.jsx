@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import * as RiIcons from 'react-icons/ri'; 
 
 const SidebarLink = styled(Link)`
   display: flex;
@@ -15,7 +16,7 @@ const SidebarLink = styled(Link)`
 
   &:hover {
     background: #252831;
-    border-left: 4px solid #ffffff;
+    border-left: 4px solid #632ce4;
     cursor: pointer;
   }
 `;
@@ -24,10 +25,18 @@ const SidebarLabel = styled.span`
   margin-left: 16px;
 `;
 
-const SubMenu = ({ title, items = [], type }) => { // Ensure items is always defined
+const SubMenu = ({ title, items, type }) => {
   const [subnav, setSubnav] = useState(false);
+  const [subnavOpen, setSubnavOpen] = useState({});
 
   const showSubnav = () => setSubnav(!subnav);
+
+  const toggleSubnav = (task) => {
+    setSubnavOpen(prevState => ({
+      ...prevState,
+      [task]: !prevState[task]
+    }));
+  };
 
   return (
     <>
@@ -36,29 +45,39 @@ const SubMenu = ({ title, items = [], type }) => { // Ensure items is always def
           <SidebarLabel>{title}</SidebarLabel>
         </div>
         <div>
-          {subnav ? '-' : '+'}
+          {subnav ? <RiIcons.RiArrowUpSFill /> : <RiIcons.RiArrowDownSFill />} {/* Use provided icons */}
         </div>
       </SidebarLink>
-      {subnav &&
-        items.map((task, index) => {
+      {subnav && type === 'Figures' && (
+        Object.keys(items).map((task, index) => {
           return (
             <div key={index}>
-              <SidebarLink to="#" onClick={showSubnav}>
-                <SidebarLabel>{task}</SidebarLabel>
+              <SidebarLink to="#" onClick={() => toggleSubnav(task)}>
                 <div>
-                  {subnav ? '-' : '+'}
+                  <SidebarLabel>{task}</SidebarLabel>
+                </div>
+                <div>
+                  {subnavOpen[task] ? <RiIcons.RiArrowUpSFill /> : <RiIcons.RiArrowDownSFill />} {/* Use provided icons */}
                 </div>
               </SidebarLink>
-              {subnav &&
-                items[task].map((item, index) => ( // Change items[task] to items
-                  <SidebarLink to={`/${type}/${task}/${item}`} key={index}>
-                    <SidebarLabel>{item}</SidebarLabel>
-                  </SidebarLink>
-                ))
-              }
+              {subnavOpen[task] && items[task].map((name, idx) => (
+                <SidebarLink to={`/${type}/${task}/${name}`} key={idx}>
+                  <SidebarLabel>{name}</SidebarLabel>
+                </SidebarLink>
+              ))}
             </div>
           );
-        })}
+        })
+      )}
+      {subnav && type !== 'Figures' && (
+        items.map((item, index) => {
+          return (
+            <SidebarLink to={`/${type}/${item}`} key={index}>
+              <SidebarLabel>{item}</SidebarLabel>
+            </SidebarLink>
+          );
+        })
+      )}
     </>
   );
 };

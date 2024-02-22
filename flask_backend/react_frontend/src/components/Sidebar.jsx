@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import SubMenu from './SubMenu';
-import Header from './Header'
+import Header from './Header';
 
 const SidebarNav = styled.nav`
   background: rgb(33, 52, 99);
@@ -55,11 +55,9 @@ const Sidebar = () => {
       <SidebarNav sidebar={true}>
         <SidebarWrap>
           {/* Render SubMenu for Subjects */}
-          {subjects.length > 0 && (
-            <SubMenu title="Subjects" items={subjects} type="Subjects" />
-          )}
+          <SubMenu title="Subjects" items={subjects} type="Subjects" />
           {/* Render SubMenu for Figures */}
-          <SubMenu title="Figures" items={Object.keys(figures)} type="Figures" />
+          <SubMenu title="Figures" items={figures} type="Figures" />
         </SidebarWrap>
       </SidebarNav>
     </>

@@ -15,43 +15,6 @@ def get_subjects():
 
     return jsonify({'subjects': subjects})
 
-# @app.route('/api/figures')
-# def get_figures():
-#     base_path = '/home/blore005/data/derivatives/sub-01/figures'  # Adjust the path to your figures directory
-    
-#     # Filter out only files with specific criteria (e.g., end with ".svg")
-#     figures = [entry for entry in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, entry)) and entry.endswith('.svg')]
-
-#     # Remove sub-01_, run-01, run-02, run-03, and .svg from each filename
-#     cleaned_figures = {figure.replace('sub-01_', '').replace('_run-01', '').replace('_run-02', '').replace('_run-03', '').replace('.svg', '') for figure in figures}
-
-#     # Sort the cleaned figures alphabetically
-#     sorted_figures = sorted(cleaned_figures)
-
-#     return jsonify({'figures': sorted_figures})
-# @app.route('/api/figures')
-# def get_figures():
-#     base_path = '/home/blore005/data/derivatives/sub-01/figures'  # Adjust the path to your figures directory
-    
-#     # Filter out only files with specific criteria (e.g., end with ".svg")
-#     figures = [entry for entry in os.listdir(base_path) if os.path.isfile(os.path.join(base_path, entry)) and entry.endswith('.svg')]
-
-#     # Process each figure filename to extract name and task
-#     processed_figures = []
-#     for figure in figures:
-#         parts = figure.split('_')
-#         if 'task-' in parts[1]:
-#             task = parts[1].split('-')[1]
-#             name = parts[3].replace('.svg', '')
-#         else:
-#             task = 'none'
-#             name = parts[1].replace('.svg', '')
-#         processed_figures.append({'name': name, 'task': task})
-
-#     # Sort the processed figures alphabetically
-#     sorted_figures = sorted(processed_figures, key=lambda x: x['name'])
-
-#     return jsonify({'figures': sorted_figures})
 @app.route('/api/figures')
 def get_figures():
     base_path = '/home/blore005/data/derivatives/sub-01/figures'  # Adjust the path to your figures directory
@@ -67,14 +30,17 @@ def get_figures():
         if 'task-' in parts[1]:
             task = parts[1]
             name = parts[3].replace('.svg', '')
+            fullName = f"{parts[1]}_{parts[3]}".replace('.svg', '')
+            
         else:
             task = 'none'
-            name = parts[1].replace('.svg', '')
+            name = '_'.join(parts[1:]).replace('.svg', '')
+            fullName = '_'.join(parts[1:]).replace('.svg', '')
         
         combination = (name, task)
         if combination not in processed_combinations:
             processed_combinations.add(combination)
-            processed_figures.append({'name': name, 'task': task})
+            processed_figures.append({'fullName': fullName, 'name': name, 'task': task})
 
     # Sort the processed figures alphabetically by name
     sorted_figures = sorted(processed_figures, key=lambda x: x['name'])
@@ -85,7 +51,7 @@ def get_figures():
 def get_images():
     task_name = request.args.get('task_name')
 
-    # Path to the directory containing all subject folders (sub-01, sub-02, ..., sub-25)
+    # Path to the directory containing all subject folders 
     base_path = '/home/blore005/data/derivatives/'
 
     # List to store file paths
