@@ -116,8 +116,8 @@ import './Subjects.css';
 const Figures = () => {
   const { taskName } = useParams();
   const [svgPaths, setSvgPaths] = useState([]);
-  const [error, setError] = useState(null); 
-  const baseURL = 'http://localhost:8000'; 
+  const [error, setError] = useState(null);
+  const baseURL = 'http://localhost:8080';
 
   // Effect to fetch SVG paths when the taskName changes
   useEffect(() => {
@@ -145,6 +145,26 @@ const Figures = () => {
     }
   };
 
+  // const renderFigureName = (path) => {
+  //   // extract the run number from the path 
+  //   const runNumber = path.split('/')[0].split('-')[1];
+  //   return `Run ${runNumber}`;
+  // };
+
+
+  // const renderFigureName = (path, index) => {
+  //   // extract the subject number from the path
+  //   const subjectNumber = path.split('/')[0];
+  //   // generate run numbers for task "task-tv"
+  //   if (taskName === 'task-tv') {
+  //     const runNumber = index + 1;
+  //     return `${subjectNumber} run ${runNumber}`;
+  //   } else {
+  //     // for other tasks, only display the subject number
+  //     return subjectNumber;
+  //   }
+  // };
+
   return (
     <div>
       <Container className="mt-5">
@@ -153,11 +173,11 @@ const Figures = () => {
         {/* Render each SVG image stacked */}
         {svgPaths.map((path, index) => (
           <div key={index} className="figures">
-            <div className="subject-number">{path.split('/')[0]}</div>
-            <img 
-              src={`${baseURL}/${path}`} 
-              alt="" 
-              className="img-fluid" 
+            <div className="subject-number">{path.split('/')[0]} </div>
+            <img
+              src={`${baseURL}/${path}`}
+              alt=""
+              className="img-fluid"
               style={{ maxWidth: '100%', ...setMaxDimensions(800, 400) }}  // Set max dimensions here
             />
           </div>

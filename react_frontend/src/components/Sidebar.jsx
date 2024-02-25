@@ -49,6 +49,18 @@ const Sidebar = () => {
     }, {});
   };
 
+  // Function to group figures by task
+  // const groupSubjects = (subjects) => {
+  //   return subjects.reduce((acc, subject) => {
+  //     const task = subject.task || 'none'; 
+  //     if (!acc[task]) {
+  //       acc[task] = [];
+  //     }
+  //     acc[task].push(subject.name);
+  //     return acc;
+  //   }, {});
+  // };
+
   return (
     <>
       <Header />

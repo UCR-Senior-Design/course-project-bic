@@ -8,7 +8,7 @@ const Subjects = () => {
   const [subjectTitle, setSubjectTitle] = useState('');
   const [svgPaths, setSvgPaths] = useState([]);
   const [error, setError] = useState(null); // State to hold error message
-  const baseURL = 'http://localhost:8000'; 
+  const baseURL = 'http://localhost:8080';
 
   useEffect(() => {
     fetch(`http://127.0.0.1:5000/svg_paths?subject_folder=${subjectFolder}`)
