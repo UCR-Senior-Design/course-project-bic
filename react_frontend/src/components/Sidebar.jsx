@@ -70,6 +70,7 @@ const Sidebar = () => {
           <SubMenu title="Subjects" items={subjects} type="Subjects" />
           {/* Render SubMenu for Figures */}
           <SubMenu title="Figures" items={figures} type="Figures" />
+          <SubMenu title="Plots" items={subjects} type="Plots" />
         </SidebarWrap>
       </SidebarNav>
     </>
