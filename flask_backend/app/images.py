@@ -113,10 +113,6 @@ def get_images():
     # Sort the image paths based on filenames
     image_paths.sort()
 
-    # # return jsonify({'image_paths': image_paths})
-    # # Set Content-Type header to 'image/svg+xml'
-    # headers = {'Content-Type': 'image/svg+xml'}
-
     # Return the JSON response with image paths and Content-Type header
     return jsonify({'image_paths': image_paths})
 
@@ -220,48 +216,38 @@ def generate_plots():
 
     return jsonify({'plots_paths': plots_paths})
 
-@app.route('/api/get_plot/<path:plot_path>')
-def get_plot(plot_path):
-    return send_file(plot_path, mimetype='image/png')
-# @app.route('/svg_paths')
-# def get_svg_paths():
-#     base_path = '/home/blore005/data/derivatives'  # Base path of the dataset
-#     subject_folder = request.args.get('subject_folder')  # Get subject folder name from query parameters
-    
-#     svg_paths = []  # List to store paths of SVG files
-    
-#     if subject_folder:
-#         subject_path = os.path.join(base_path, subject_folder)
-        
-#         # Check if the specified subject folder exists and starts with "sub-"
-#         if os.path.isdir(subject_path) and subject_folder.startswith('sub-'):
-#             figures_path = os.path.join(subject_path, 'figures')
-            
-#             # Check if the "figures" directory exists within the specified subject folder
-#             if os.path.isdir(figures_path):
-#                 # Append paths of SVG files within the "figures" directory
-#                 svg_paths.extend([
-#                     {
-#                         'path': os.path.join(subject_folder, 'figures', file),
-#                         'subject_number': subject_folder.split('_')[0].replace('sub-', ''),
-#                         'run_number': file.split('_')[3].split('-')[1],
-#                         'task_type': file.split('_')[2].split('-')[1],
-#                         'name': file.split('_')[4].split('-')[1].split('.')[0]
-#                     }
-#                     if file.startswith('sub-') and '_task-' in file and '_run-' in file and '_desc-' in file else
-#                     {
-#                         'path': os.path.join(subject_folder, 'figures', file),
-#                         'subject_number': subject_folder.split('_')[0].replace('sub-', ''),
-#                         'name': file.split('_')[2].split('.')[0]
-#                     }
-#                     for file in os.listdir(figures_path) if file.endswith('.svg')
-#                 ])
+@app.route('/get_plots/<plot_type>')
+def get_plots_by_type(plot_type):
+    plot_type = plot_type.lower()  # Convert plot type to lowercase
 
-#     # Sort the image paths based on filenames
-#     svg_paths.sort(key=lambda x: x['path'])
-    
-#     return jsonify({'svg_paths': svg_paths})
+    plots_directory = '/home/blore005/data/derivatives/plots'
 
+    # List to store paths of matching plot files
+    matching_plots = []
+
+    # Recursively traverse the directory structure
+    for root, dirs, files in os.walk(plots_directory):
+        for file in files:
+            if file.endswith('.png'):
+                file_lowercase = file.lower()  # Convert filename to lowercase
+                if plot_type == 'displacement' and 'fd' in file_lowercase:
+                    # Construct the full path to the plot file
+                    plot_path = os.path.join(root, file)
+                    # Append the path to the list
+                    matching_plots.append(plot_path)
+                elif plot_type != 'displacement' and plot_type in file_lowercase:
+                    # Construct the full path to the plot file
+                    plot_path = os.path.join(root, file)
+                    # Append the path to the list
+                    matching_plots.append(plot_path)
+
+    # Sort the matching plot paths alphabetically
+    matching_plots = sorted(matching_plots)
+
+    plots_paths = [path.replace('/home/blore005/data/derivatives/', '') for path in matching_plots]
+
+    # Serve the matching plot files to the client
+    return jsonify({'plots_paths': plots_paths})
 
 if __name__ == '__main__':
     app.run(debug=True)
