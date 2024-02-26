@@ -1,0 +1,16 @@
+.header-container {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 250px;
+  font-size: 36px;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  margin-left: 250px;
+}
+
+.plots {
+  margin: 20px;
+}

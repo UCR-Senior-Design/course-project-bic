@@ -1,0 +1,9 @@
+.container {
+    display: flex;
+    justify-content: center;
+    margin-left: 250px; /* Adjust based on your sidebar width */
+}
+    
+.plots {
+    margin: 20px; /* Adjust margin as needed */
+}

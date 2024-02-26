@@ -216,6 +216,39 @@ def generate_plots():
 
     return jsonify({'plots_paths': plots_paths})
 
+# @app.route('/get_plots/<plot_type>')
+# def get_plots_by_type(plot_type):
+#     plot_type = plot_type.lower()  # Convert plot type to lowercase
+
+#     plots_directory = '/home/blore005/data/derivatives/plots'
+
+#     # List to store paths of matching plot files
+#     matching_plots = []
+
+#     # Recursively traverse the directory structure
+#     for root, dirs, files in os.walk(plots_directory):
+#         for file in files:
+#             if file.endswith('.png'):
+#                 file_lowercase = file.lower()  # Convert filename to lowercase
+#                 if plot_type == 'displacement' and 'fd' in file_lowercase:
+#                     # Construct the full path to the plot file
+#                     plot_path = os.path.join(root, file)
+#                     # Append the path to the list
+#                     matching_plots.append(plot_path)
+#                 elif plot_type != 'displacement' and plot_type in file_lowercase:
+#                     # Construct the full path to the plot file
+#                     plot_path = os.path.join(root, file)
+#                     # Append the path to the list
+#                     matching_plots.append(plot_path)
+
+#     # Sort the matching plot paths alphabetically
+#     matching_plots = sorted(matching_plots)
+
+#     plots_paths = [path.replace('/home/blore005/data/derivatives/', '') for path in matching_plots]
+
+#     # Serve the matching plot files to the client
+#     return jsonify({'plots_paths': plots_paths})
+
 @app.route('/get_plots/<plot_type>')
 def get_plots_by_type(plot_type):
     plot_type = plot_type.lower()  # Convert plot type to lowercase
@@ -233,21 +266,31 @@ def get_plots_by_type(plot_type):
                 if plot_type == 'displacement' and 'fd' in file_lowercase:
                     # Construct the full path to the plot file
                     plot_path = os.path.join(root, file)
-                    # Append the path to the list
-                    matching_plots.append(plot_path)
+                    # Append the path to the list as a dictionary
+                    matching_plots.append({'path': plot_path})
                 elif plot_type != 'displacement' and plot_type in file_lowercase:
                     # Construct the full path to the plot file
                     plot_path = os.path.join(root, file)
-                    # Append the path to the list
-                    matching_plots.append(plot_path)
+                    # Append the path to the list as a dictionary
+                    matching_plots.append({'path': plot_path})
 
     # Sort the matching plot paths alphabetically
-    matching_plots = sorted(matching_plots)
+    matching_plots = sorted(matching_plots, key=lambda x: x['path'])
 
-    plots_paths = [path.replace('/home/blore005/data/derivatives/', '') for path in matching_plots]
+    matching_plots = [path['path'].replace('/home/blore005/data/derivatives/', '') for path in matching_plots]
+
+    # Extract subject, task, and run from plot file names
+    for i, plot in enumerate(matching_plots):
+        file_name = os.path.basename(plot)
+        parts = file_name.split('_')
+        if len(parts) >= 4:
+            subject = parts[2]
+            task = parts[3]
+            run = parts[4]
+            matching_plots[i] = {'path': plot, 'subject': subject, 'task': task, 'run': run}
 
     # Serve the matching plot files to the client
-    return jsonify({'plots_paths': plots_paths})
+    return jsonify({'plots_paths': matching_plots})
 
 if __name__ == '__main__':
     app.run(debug=True)

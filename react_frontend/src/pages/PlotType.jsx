@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Alert } from 'react-bootstrap'; // Import Alert from react-bootstrap
+import { Container, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import './PlotType.css';
 
 const Plot = () => {
   const { plotType } = useParams();
   const [subjectTitle, setSubjectTitle] = useState('');
-  const [plotPaths, setPlotPaths] = useState([]);
-  const [error, setError] = useState(null); // State to hold error message
+  const [plots, setPlots] = useState([]);
+  const [error, setError] = useState(null);
   const baseURL = 'http://localhost:8080';
 
   useEffect(() => {
@@ -18,33 +19,37 @@ const Plot = () => {
         return response.json();
       })
       .then(data => {
-        setSubjectTitle(plotType); // Set the subject folder as the title
-        setPlotPaths(data.plots_paths);
+        setSubjectTitle(plotType);
+        setPlots(data.plots_paths);
       })
       .catch(error => {
         console.error('Error fetching plot paths:', error);
-        setError('Failed to fetch plot paths. Please try again later.'); // Set error message
+        setError('Failed to fetch plot paths. Please try again later.');
       });
   }, [plotType]);
 
   return (
     <div>
       <Container className="mt-5">
-        {error && <Alert variant="danger">{error}</Alert>} {/* Display error message */}
-        <h1>{subjectTitle}</h1> {/* Display subject folder title */}
-        {plotPaths.map((path, index) => (
-          <div key={index} className='plots'>
+        {error && <Alert variant="danger">{error}</Alert>}
+      </Container>
+      <div className="header-container"> {/* Header outside of container */}
+        <h1>{subjectTitle}</h1>
+      </div>
+      <Container>
+        {plots.map((plot, index) => (
+          <div key={index} className="plots">
             <img
-              src={`${baseURL}/${path}`}
+              src={`${baseURL}/${plot.path}`}
               alt=""
-              className='img-fluid plot-image'
+              className="img-fluid plot-image"
             />
-            <p>{path.split('/').pop()}</p> {/* Display image name as label */}
+            <p>Subject: {plot.subject}, Task: {plot.task}, Run: {plot.run}</p>
           </div>
         ))}
       </Container>
     </div>
-  );
+  );  
 };
 
 export default Plot;
