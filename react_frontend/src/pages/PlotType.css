@@ -2,7 +2,11 @@
   text-align: center;
   margin-top: 20px;
   margin-left: 250px;
-  font-size: 36px;
+  font-size: 20px;
+}
+
+h2 {
+  font-size: 35px; /* Adjust the font size as needed */
 }
 
 .container {
@@ -13,4 +17,8 @@
 
 .plots {
   margin: 20px;
+}
+
+.plots img {
+  margin-bottom: 20px; /* Add margin between images */
 }
