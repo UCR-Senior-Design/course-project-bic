@@ -1,9 +1,20 @@
+.header-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-left: 250px;
+    font-size: 20px;
+}
+
 .container {
     display: flex;
     justify-content: center;
-    margin-left: 250px; /* Adjust based on your sidebar width */
+    margin-left: 250px;
 }
-    
+  
 .plots {
-    margin: 20px; /* Adjust margin as needed */
+    margin: 20px;
+}
+  
+.plots img {
+    margin-bottom: 20px; /* Add margin between images */
 }
