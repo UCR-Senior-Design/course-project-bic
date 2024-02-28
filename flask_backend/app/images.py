@@ -134,13 +134,16 @@ def get_svg_paths():
             if os.path.isdir(figures_path):
                 # Append paths of SVG files within the "figures" directory
                 # svg_paths.extend([os.path.join(figures_path, file) for file in os.listdir(figures_path) if file.endswith('.svg')])
-                svg_paths.extend([
-                    os.path.join(subject_folder, 'figures', file) 
-                    for file in os.listdir(figures_path) if file.endswith('.svg')
-                ])
+                for file in os.listdir(figures_path):
+                    if file.endswith('.svg'):
+                        task_type = file.split('_')[1].split('-')[1] if 'task-' in file else 'other'
+                        svg_paths.append({
+                            'path': os.path.join(subject_folder, 'figures', file),
+                            'task_type': task_type
+                        })
 
     #Sort the image paths based on filenames
-    svg_paths.sort()
+    svg_paths.sort(key=lambda x: x['path'])
     
     return jsonify({'svg_paths': svg_paths})
 
