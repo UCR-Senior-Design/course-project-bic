@@ -56,7 +56,7 @@ To SSH tunnel into the VM using VS Code, follow these steps:
    ```
    ssh-keygen -t rsa -f <filename> -C <username on VM> -b 2048
    ```
-Leave the passphrase empty.
+   Leave the passphrase empty.
 
 7. Add the public key to SSH keys on the GCP VM instance.
 8. Now you can connect to the VM by going to View/Command Palette again, typing in "Remote-SSH", and choosing "Connect to Host...". Choose your host. You can see that the connection was established successfully on the bottom left of the page.
@@ -76,11 +76,4 @@ To run the website, follow these steps:
    ./run.sh
    ```
 
-4. Once the website is running, you can access it by opening a web browser and navigating to the provided link. For example:
-   ```
-   VITE v4.5.1  ready in 564 ms
-
-  ➜  Local:   http://localhost:5173/
-  ➜  Network: use --host to expose
-  ➜  press h to show help once your done using the website go back to vs code and use ctrl+c to terminate
-  ```
+4. Once the website is running, you can access it by opening a web browser and navigating to the provided link. It will be under Vite.
