@@ -11,8 +11,7 @@ const Header = () => {
       </div>
       <h1 className="title">fMRI Data Outputs</h1>
       <div className="navigation">
-        <input type="text" placeholder="Search..." className="search-bar" />
-        <a href="/welcome" className="welcome-link">Welcome</a>
+        <a href="/inputdatasets" className="inputdatasets-link">Input Datasets</a>
         <a href="/home" className="home-link">Home</a>
         <a href="/about" className="about-link">About</a>
       </div>

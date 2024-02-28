@@ -1,8 +1,8 @@
 import React from "react";
 
-function Welcome() {
+function InputDatasets() {
   return (
-    <div className="welcome" style={{ color: "#7785ac" }}>
+    <div className="inputdatasets" style={{ color: "#7785ac" }}>
       <div class="container">
         <div class="row align-items-center my-5">
           <div class="col-lg-7">
@@ -14,7 +14,7 @@ function Welcome() {
           <div class="col-lg-5">
             <h1 class="font-weight-light">Welcome!</h1>
             <p>
-            {/* <u><strong></strong> </u><br /><br /> */}
+              {/* <u><strong></strong> </u><br /><br /> */}
             </p>
           </div>
         </div>
@@ -23,4 +23,4 @@ function Welcome() {
   );
 }
 
-export default Welcome;
+export default InputDatasets;

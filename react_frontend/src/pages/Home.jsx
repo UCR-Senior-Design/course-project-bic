@@ -14,7 +14,7 @@ function Home() {
           <div class="col-lg-5">
             <h1 class="font-weight-light"> </h1>
             <p>
-            
+
             </p>
           </div>
         </div>

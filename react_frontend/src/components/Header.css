@@ -39,16 +39,7 @@
     /* Adjust the margin-left to move the logo more to the left */
 }
 
-.search-bar {
-    padding: 8px;
-    border-radius: 4px;
-    border: 1px solid #ddd;
-    background-color: #fff;
-    /* White background */
-    color: #000;
-    /* Black font color */
-    margin-right: 10px;
-}
+
 
 .home-link,
 .about-link {
@@ -62,12 +53,12 @@
     text-decoration: underline;
 }
 
-.welcome-link {
+.inputdatasets-link {
     color: #fff;
     text-decoration: none;
     margin-right: 10px
 }
 
-.welcome-link:hover {
+.inputdatasets-link:hover {
     text-decoration: underline;
 }
