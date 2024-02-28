@@ -83,3 +83,14 @@ cd /home/blore005/course-project-bic
 ```bash
 npm uninstall -g npm
 npm install -g npm@20.5.0
+## Issues Encountered and Solutions
+
+### Issue 1 version 2: pm v10.4.0 is known not to run on Node.js v10.19.0.
+nvm install 18.17.0
+
+### Issue 2: python
+pip install -r requirements.txt
+
+
+
+
