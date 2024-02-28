@@ -265,5 +265,67 @@ def get_plots_by_type(plot_type):
 
     return jsonify({'plots_paths': matching_plots})
 
+
+@app.route('/api/subjects/<subject_id>/tsv_files', methods=['GET'])
+def get_subject_tsv_files(subject_id):
+    base_path = f'/home/blore005/data/derivatives/{subject_id}'
+    tsv_files = []
+
+    # Walk through the subject's directory to find .tsv files
+    for root, dirs, files in os.walk(base_path):
+        for file in files:
+            if file.endswith('.tsv'):
+                # Construct the file's path relative to the base_path
+                file_path = os.path.relpath(os.path.join(root, file), base_path)
+                tsv_files.append(file_path)
+
+    return jsonify({'tsv_files': tsv_files})
+
+
+@app.route('/api/filter_plot', methods=['GET'])
+def api_filter_plot():
+    subject_id = request.args.get('subject_id', default='all', type=str)
+    magnitude = request.args.get('magnitude', default=1.0, type=float)
+    threshold = request.args.get('threshold', default=0.5, type=float)
+    num_spikes = request.args.get('num_spikes', default=10, type=int)
+
+    plots = filter_plot(subject_id, magnitude, threshold, num_spikes)
+    
+    if not plots:
+        return jsonify({"error": "No plots generated"}), 404
+
+    
+    return jsonify({"plots": plots})
+
+#put later in a different place
+def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, num_spikes=5):
+    base_path = '/home/blore005/data/derivatives'
+    subjects = [subject_id] if subject_id != 'all' else [d for d in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, d)) and d.startswith('sub-')]
+    plots = []
+
+    for sub in subjects:
+        sub_path = os.path.join(base_path, sub)
+        tsv_files = [f for f in os.listdir(sub_path) if f.endswith('.tsv') and os.path.isfile(os.path.join(sub_path, f))]
+        
+        for file in tsv_files:
+            data_path = os.path.join(sub_path, file)
+            data = pd.read_csv(data_path, sep='\t')
+            filtered_data = data[data['framewise_displacement'] > threshold]
+            spikes = filtered_data[filtered_data['framewise_displacement'] > magnitude]
+            if len(spikes) >= num_spikes:
+                plt.figure(figsize=(10, 6))
+                plt.plot(data['framewise_displacement'], label='Framewise Displacement')
+                plt.plot(filtered_data['framewise_displacement'], 'r', label='Filtered Data')
+                plt.title(f'{sub} - {file}')
+                plt.xlabel('Time')
+                plt.ylabel('Framewise Displacement')
+                plt.legend()
+                plt.savefig(f'/tmp/{sub}_{file.split(".")[0]}_plot.png')
+                plt.close()
+                plots.append(f'/tmp/{sub}_{file.split(".")[0]}_plot.png')
+    
+    return plots
+
+
 if __name__ == '__main__':
     app.run(debug=True)
