@@ -45,19 +45,42 @@ To SSH tunnel into the VM using VS Code, follow these steps:
 3. Click on View at the top of the page and then click Command Palette.
 4. Enter "Remote-SSH" in the command palette and choose "Open SSH Configuration File...". This will allow you to choose a config file in your home directory in the `.ssh` folder. The path should be similar to `/Users/<username>/.ssh/config`.
 5. If it's the first time using this, the config file will be filled with dummy information. Create something similar to:
-```
-Host <name of your choice>
-  HostName <VM External IP Address>
-  User <username on VM>
-  IdentityFile <path to private key>
-```
+   ```
+   Host <name of your choice>
+     HostName <VM External IP Address>
+     User <username on VM>
+     IdentityFile <path to private key>
+   ```
 
 6. If you don't have a public and private key, you can create one using:
-
-```
-ssh-keygen -t rsa -f <filename> -C <username on VM> -b 2048
-```
+   ```
+   ssh-keygen -t rsa -f <filename> -C <username on VM> -b 2048
+   ```
 Leave the passphrase empty.
 
 7. Add the public key to SSH keys on the GCP VM instance.
 8. Now you can connect to the VM by going to View/Command Palette again, typing in "Remote-SSH", and choosing "Connect to Host...". Choose your host. You can see that the connection was established successfully on the bottom left of the page.
+
+## Running the Website
+
+To run the website, follow these steps:
+
+1. Open a terminal.
+2. Navigate to the directory where the website is located:
+   ```
+   cd /home/blore005/course-project-bic
+   ```
+
+3. Run the script `run.sh`:
+   ```
+   ./run.sh
+   ```
+
+4. Once the website is running, you can access it by opening a web browser and navigating to the provided link. For example:
+   ```
+   VITE v4.5.1  ready in 564 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: use --host to expose
+  ➜  press h to show help once your done using the website go back to vs code and use ctrl+c to terminate
+  ```
