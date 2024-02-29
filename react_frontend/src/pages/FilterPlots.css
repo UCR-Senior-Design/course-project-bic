@@ -21,8 +21,10 @@ p {
 .container {
   display: flex;
   justify-content: center;
-  margin-left: 250px;
+  margin-left: 350px;
 }
+
+/* Align items to the start */
 
 .plots {
   margin: 20px;

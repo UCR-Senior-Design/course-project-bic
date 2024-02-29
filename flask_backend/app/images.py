@@ -412,7 +412,7 @@ def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, max_spikes=5):
             spike_count = len(spikes_data[spikes_data['framewise_displacement'] > magnitude])
             
             # Only proceed if spike count meets criteria
-            if spike_count >= max_spikes:
+            if spike_count <= max_spikes:
                 plt.figure(figsize=(10, 6))
                 plt.plot(data['framewise_displacement'], label='Framewise Displacement')
                 plt.plot(spikes_data['framewise_displacement'], 'r.', label='Spikes > Threshold')
