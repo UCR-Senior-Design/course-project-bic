@@ -165,6 +165,14 @@ const Figures = () => {
   //   }
   // };
 
+  const renderFigureName = (path) => {
+    // extract the run number from the path 
+    const parts = path.split('/');
+    const filename = parts[parts.length - 1]; // get the filename from the path
+    const runNumber = filename.split('_')[2]; // split the filename by '_' and get the second part
+    return `${runNumber}`;
+  };
+
   return (
     <div>
       <Container className="mt-5">
@@ -173,7 +181,7 @@ const Figures = () => {
         {/* Render each SVG image stacked */}
         {svgPaths.map((path, index) => (
           <div key={index} className="figures">
-            <div className="subject-number">{path.split('/')[0]} </div>
+            <div className="subject-number">{path.split('/')[0]} {renderFigureName(path)}</div>
             <img
               src={`${baseURL}/${path}`}
               alt=""
