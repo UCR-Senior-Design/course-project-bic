@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
+import './InputData.css'
 
 const DataPathForm = () => {
     const [dataPath, setDataPath] = useState(''); // State variable to store the data path entered by the user
@@ -26,7 +27,7 @@ const DataPathForm = () => {
     };
 
     return (
-        <div>
+        <div className="inputdata">
             <h1>Data Path Configuration</h1>
             <p>Please enter the path to your data:</p>
             {/* Form for entering the data path */}

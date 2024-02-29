@@ -34,24 +34,24 @@
 import './App.css';
 import Header from './components/Header';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Welcome from "./pages/Welcome";
+import DataPathForm from "./pages/InputData";
 import Home from "./pages/Home";
-import About from "./pages/About";
 import Layout from "./Layout"; // Import the layout component here
 import Subjects from './pages/Subjects';
 import Figures from './pages/Figures';
 import SubjectView from './pages/PlotSubjectView';
 import TypeView from './pages/PlotType';
+import ThresholdSpike from './pages/ThresholdSpike';
 
 function App() {
   return (
     <Router>
       <Header />
       <Routes>
-        <Route path='/' element={<Welcome />} />
-        <Route path='/welcome' element={<Welcome />} />
+        <Route path='/' element={<DataPathForm />} />
+        <Route path='/inputdata' element={<DataPathForm />} />
         <Route path='/home' element={<Layout><Home /></Layout>} />
-        <Route path='/about' element={<About />} />
+        <Route path='/thres-spike' element={<ThresholdSpike />} />
         <Route path='/subjects/:subjectFolder' element={<Layout><Subjects /></Layout>} />
         <Route path='/Figures/:task/:taskName' element={<Layout><Figures /></Layout>} />
         <Route path='/plots/subjects/:subjectFolder' element={<Layout><SubjectView /></Layout>} />
