@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import './PlotSubjectView.css';
-
-
+import './PlotFilter.css'
 
 
 
@@ -34,25 +32,14 @@ function PlotFilter(){
 
   useEffect(() => {
     fetch(`http://127.0.0.1:5000/api/subjects`)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to fetch plot paths');
-        }
-        return response.json();
-      })
-      .then(data => {
-        setSubjectTitle('Subject ' + subjectFolder.split('-')[1]);
-        setPlots(data.plots_paths);
-      })
-      .catch(error => {
-        console.error('Error fetching plot paths:', error);
-        setError('Failed to fetch plot paths. Please try again later.');
-      });
+    .then(response => response.json())
+    .then(data => setSubjects(data.subjects))
+    .catch(error => console.error('Error fetching subjects:', error));
   }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent form from refreshing the page on submit
-    fetch(`${baseURL}/api/filter_plot?subject_id=${selectedSubject}&magnitude=${magnitude}&threshold=${threshold}&num_spikes=${numSpikes}`)
+    fetch(`${baseURL}/api/filter_plot?subject_id=${selectedSubject}&magnitude=${magnitude}&threshold=${threshold}&max_spikes=${numSpikes}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
@@ -66,15 +53,17 @@ function PlotFilter(){
 
   
   return (
+    <Container className="mt-5">
     <div>
       <form onSubmit={handleSubmit}>
         <label>
           Subject:
           <select value={selectedSubject} onChange={(e) => setSelectedSubject(e.target.value)}>
-            <option value="all">All Subjects</option>
-            {subjects.map(subject => (
-              <option key={subject} value={subject}>{subject}</option>
-            ))}
+             <option value="">Select a subject</option>
+              {subjects.map(subject => (
+                <option key={subject} value={subject}>{subject}</option>
+              ))}
+              <option value="all">All Subjects</option> {/* Add this line */}
           </select>
         </label>
         <br />
@@ -97,20 +86,19 @@ function PlotFilter(){
       </form>
 
       <div>
-        {plots.length > 0 && (
+        
           <div>
             <h2>Generated Plots</h2>
-            {/* Display plots as images or links here */}
             {plots.map((plot, index) => (
-              <div key={index}>
-                {/* Assuming plot is a URL to the image */}
-                <img src={plot} alt={`Plot ${index + 1}`} style={{ maxWidth: '100%' }} />
-              </div>
-            ))}
+            // Assuming plots are URLs to the images
+            <img key={index} src={plot} alt={`Plot ${index}`} style={{ maxWidth: '100%', marginBottom: '20px' }} />
+          ))}
+            
           </div>
-        )}
+        
       </div>
     </div>
+    </Container>
   );
 }
 

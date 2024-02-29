@@ -127,6 +127,12 @@ const SubMenu = ({ title, items, type, icon }) => {
               <SidebarLabel>Plot Filter</SidebarLabel>
           </SidebarLink>
          
+        
+      {/* Submenu for Plot Filter */}
+      <SidebarLink to="/filterplots">
+              <SidebarLabel>Plots of Generic Plots</SidebarLabel>
+          </SidebarLink>
+         
         </div>
       )}
     </>

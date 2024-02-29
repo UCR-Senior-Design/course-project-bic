@@ -10,6 +10,7 @@ import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import PlotFilter from "./pages/PlotFilter";
+import FilterPlots from "./pages/FilterPlots";
 function App() {
   return (
     <Router>
@@ -24,6 +25,7 @@ function App() {
         <Route path='/plots/subjects/:subjectFolder' element={<SubjectView />} />
         <Route path='/plots/type/:plotType' element={<TypeView />} />
         <Route path='/plotfilter' element={<PlotFilter />} />
+        <Route path='/filterplots' element={<FilterPlots />} />
       </Routes>
     </Router>
   );
