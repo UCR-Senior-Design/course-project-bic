@@ -25,7 +25,7 @@ python3 /home/blore005/course-project-bic/flask_backend/app/images.py &
 pid_images=$!
 
 # Run npm dev server
-cd /home/inaz001/course-project-bic/react_frontend
+cd /home/blore005/course-project-bic/react_frontend
 npm run dev
 
 # If npm run dev exits, kill the background processes
