@@ -9,7 +9,7 @@ import TypeView from './pages/PlotType';
 import Welcome from "./pages/Welcome";
 import Home from "./pages/Home";
 import About from "./pages/About";
-
+import PlotFilter from "./pages/PlotFilter";
 function App() {
   return (
     <Router>
@@ -23,6 +23,7 @@ function App() {
         <Route path='/Figures/:task/:taskName' element={<Figures />} />
         <Route path='/plots/subjects/:subjectFolder' element={<SubjectView />} />
         <Route path='/plots/type/:plotType' element={<TypeView />} />
+        <Route path='/plotfilter' element={<PlotFilter />} />
       </Routes>
     </Router>
   );

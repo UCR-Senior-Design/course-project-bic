@@ -57,19 +57,19 @@ trap cleanup SIGINT
 
 # Run http server to serve images
 cd /home/blore005/data/derivatives
-python -m http.server 8080 &
+python3 -m http.server 8080 &
 
 # Store the PID of the background process
 pid_http_server=$!
 
 # Run images.py in the background
-python /home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/images.py &
+python3 /home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/images.py &
 
 # Store the PID of the background process
 pid_images=$!
 
 # Run npm dev server
-cd /home/blore005/Project_Tester_CS178B/course-project-bic/react_frontend
+cd /home/cpasc012/Project_Tester_CS178B/course-project-bic/react_frontend
 npm run dev
 
 # If npm run dev exits, kill the background processes
