@@ -80,17 +80,17 @@ cd /home/blore005/course-project-bic
 - **Error Message**: `ERROR: pm v10.4.0 is known not to run on Node.js v10.19.0. This version of pm supports the following node versions: ^18.17.0 || >=20.5.0`
 - **Solution**: Run the following commands:
 
-```bash
+
 npm uninstall -g npm
 npm install -g npm@20.5.0
-## Issues Encountered and Solutions
+
 
 ### Issue 1 version 2: pm v10.4.0 is known not to run on Node.js v10.19.0.
 nvm install 18.17.0
 
 ### Issue 2: python
 pip install -r requirements.txt
-
+```bash
 
 
 
