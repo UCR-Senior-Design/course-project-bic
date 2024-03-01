@@ -454,6 +454,80 @@ def get_svg_paths():
     
     return jsonify({'svg_paths': svg_paths})
 
+# @app.route('/api/generate_plots', methods=['GET'])
+# def generate_plots():
+#     if base_path is None:
+#         return jsonify({'error': 'Data path is not set'}), 400
+
+#     output_path = os.path.join(base_path, 'plots')  # Adjust the output path based on base_path
+
+#     # Create output directory if it doesn't exist
+#     if not os.path.exists(output_path):
+#         os.makedirs(output_path)
+
+#     plots_paths = {}
+
+#     for subject_folder in os.listdir(base_path):
+#         subject_folder_path = os.path.join(base_path, subject_folder)
+#         if os.path.isdir(subject_folder_path):
+#             func_folder_path = os.path.join(subject_folder_path, 'func')
+#             if os.path.exists(func_folder_path):
+#                 for file_name in os.listdir(func_folder_path):
+#                     if file_name.endswith('.tsv'):
+#                         # Regular expression pattern to extract subject number and run number
+#                         pattern = r'sub-(\d+)_task-\w+_run-(\d+)_desc'
+#                         # extract subject number and run number
+#                         match = re.search(pattern, file_name)
+#                         if match:
+#                             subject_number = match.group(1)
+
+#                         tsv_path = os.path.join(func_folder_path, file_name)
+#                         df = pd.read_csv(tsv_path, delimiter='\t')
+
+#                         # Rotation Plot
+#                         rotation_plot_filename = f'rotation_plot_{file_name[:-4]}.png'
+#                         rotation_plot_path = os.path.join(output_path, rotation_plot_filename)
+#                         if os.path.exists(rotation_plot_path):
+#                             os.remove(rotation_plot_path)
+#                         plt.figure()
+#                         sns.lineplot(data=df[['rot_x', 'rot_y', 'rot_z']])
+#                         plt.title(f'Subject {subject_number} Rotation Plot')
+#                         plt.xlabel('Time')
+#                         plt.ylabel('Rotation')
+#                         plt.savefig(rotation_plot_path)
+#                         plt.close()
+#                         plots_paths[f'rotation_plot_{file_name[:-4]}'] = rotation_plot_path
+
+#                         # Translation Plot
+#                         translation_plot_filename = f'translation_plot_{file_name[:-4]}.png'
+#                         translation_plot_path = os.path.join(output_path, translation_plot_filename)
+#                         if os.path.exists(translation_plot_path):
+#                             os.remove(translation_plot_path)
+#                         plt.figure()
+#                         sns.lineplot(data=df[['trans_x', 'trans_y', 'trans_z']])
+#                         plt.title(f'Subject {subject_number} Translation Plot')
+#                         plt.xlabel('Time')
+#                         plt.ylabel('Translation')
+#                         plt.savefig(translation_plot_path)
+#                         plt.close()
+#                         plots_paths[f'translation_plot_{file_name[:-4]}'] = translation_plot_path
+
+#                         # Framewise Displacement Plot
+#                         fd_plot_filename = f'fd_plot_{file_name[:-4]}.png'
+#                         fd_plot_path = os.path.join(output_path, fd_plot_filename)
+#                         if os.path.exists(fd_plot_path):
+#                             os.remove(fd_plot_path)
+#                         plt.figure()
+#                         sns.lineplot(data=df['framewise_displacement'])
+#                         plt.title(f'Subject {subject_number} Framewise Displacement Plot')
+#                         plt.xlabel('Time')
+#                         plt.ylabel('Framewise Displacement')
+#                         plt.savefig(fd_plot_path)
+#                         plt.close()
+#                         plots_paths[f'fd_plot_{file_name[:-4]}'] = fd_plot_path
+
+#     return jsonify({'plots_paths': plots_paths})
+
 @app.route('/api/generate_plots', methods=['GET'])
 def generate_plots():
     if base_path is None:
@@ -487,43 +561,40 @@ def generate_plots():
                         # Rotation Plot
                         rotation_plot_filename = f'rotation_plot_{file_name[:-4]}.png'
                         rotation_plot_path = os.path.join(output_path, rotation_plot_filename)
-                        if os.path.exists(rotation_plot_path):
-                            os.remove(rotation_plot_path)
-                        plt.figure()
-                        sns.lineplot(data=df[['rot_x', 'rot_y', 'rot_z']])
-                        plt.title(f'Subject {subject_number} Rotation Plot')
-                        plt.xlabel('Time')
-                        plt.ylabel('Rotation')
-                        plt.savefig(rotation_plot_path)
-                        plt.close()
+                        if not os.path.exists(rotation_plot_path):
+                            plt.figure()
+                            sns.lineplot(data=df[['rot_x', 'rot_y', 'rot_z']])
+                            plt.title(f'Subject {subject_number} Rotation Plot')
+                            plt.xlabel('Time')
+                            plt.ylabel('Rotation')
+                            plt.savefig(rotation_plot_path)
+                            plt.close()
                         plots_paths[f'rotation_plot_{file_name[:-4]}'] = rotation_plot_path
 
                         # Translation Plot
                         translation_plot_filename = f'translation_plot_{file_name[:-4]}.png'
                         translation_plot_path = os.path.join(output_path, translation_plot_filename)
-                        if os.path.exists(translation_plot_path):
-                            os.remove(translation_plot_path)
-                        plt.figure()
-                        sns.lineplot(data=df[['trans_x', 'trans_y', 'trans_z']])
-                        plt.title(f'Subject {subject_number} Translation Plot')
-                        plt.xlabel('Time')
-                        plt.ylabel('Translation')
-                        plt.savefig(translation_plot_path)
-                        plt.close()
+                        if not os.path.exists(translation_plot_path):
+                            plt.figure()
+                            sns.lineplot(data=df[['trans_x', 'trans_y', 'trans_z']])
+                            plt.title(f'Subject {subject_number} Translation Plot')
+                            plt.xlabel('Time')
+                            plt.ylabel('Translation')
+                            plt.savefig(translation_plot_path)
+                            plt.close()
                         plots_paths[f'translation_plot_{file_name[:-4]}'] = translation_plot_path
 
                         # Framewise Displacement Plot
                         fd_plot_filename = f'fd_plot_{file_name[:-4]}.png'
                         fd_plot_path = os.path.join(output_path, fd_plot_filename)
-                        if os.path.exists(fd_plot_path):
-                            os.remove(fd_plot_path)
-                        plt.figure()
-                        sns.lineplot(data=df['framewise_displacement'])
-                        plt.title(f'Subject {subject_number} Framewise Displacement Plot')
-                        plt.xlabel('Time')
-                        plt.ylabel('Framewise Displacement')
-                        plt.savefig(fd_plot_path)
-                        plt.close()
+                        if not os.path.exists(fd_plot_path):
+                            plt.figure()
+                            sns.lineplot(data=df['framewise_displacement'])
+                            plt.title(f'Subject {subject_number} Framewise Displacement Plot')
+                            plt.xlabel('Time')
+                            plt.ylabel('Framewise Displacement')
+                            plt.savefig(fd_plot_path)
+                            plt.close()
                         plots_paths[f'fd_plot_{file_name[:-4]}'] = fd_plot_path
 
     return jsonify({'plots_paths': plots_paths})
