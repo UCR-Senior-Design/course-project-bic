@@ -72,3 +72,29 @@ cd /home/blore005/course-project-bic
 ./run.sh
 ```
 4. Once the website is running, you can access it by opening a web browser and navigating to the provided link. It will be under Vite.
+
+## Issues Encountered and Solutions
+
+### Issue 1: pm v10.4.0 is known not to run on Node.js v10.19.0.
+
+- **Error Message**: `ERROR: pm v10.4.0 is known not to run on Node.js v10.19.0. This version of pm supports the following node versions: ^18.17.0 || >=20.5.0`
+- **Solution**: Run the following commands:
+
+  ```
+  npm uninstall -g npm
+  npm install -g npm@20.5.0
+  ```
+
+### Issue 1 version 2: pm v10.4.0 is known not to run on Node.js v10.19.0.
+
+  ```
+  nvm install 18.17.0
+  ```
+
+### Issue 2: python
+  ```
+  pip install -r requirements.txt
+  ```
+
+
+
