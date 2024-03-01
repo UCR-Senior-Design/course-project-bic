@@ -52,13 +52,13 @@ python3 -m http.server --bind 127.0.0.1 8080 &
 pid_http_server=$!
 
 # Run images.py in the background
-python3 /home/inaz001/course-project-bic/flask_backend/app/images.py &
+python3 /home/blore005/course-project-bic/flask_backend/app/images.py &
 
 # Store the PID of the background process
 pid_images=$!
 
 # Run npm dev server
-cd /home/inaz001/course-project-bic/react_frontend
+cd /home/blore005/course-project-bic/react_frontend
 npm run dev
 
 # If npm run dev exits, kill the background processes
