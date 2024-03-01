@@ -11,9 +11,9 @@ const Header = () => {
       </div>
       <h1 className="title">fMRI Data Outputs</h1>
       <div className="navigation">
-        <a href="/inputdatasets" className="inputdatasets-link">Input Datasets</a>
+        <a href="/inputdata" className="inputdata-link">Input Datasets</a>
         <a href="/home" className="home-link">Home</a>
-        <a href="/about" className="about-link">About</a>
+        <a href="/thres-spike" className="thres-spike-link">Threshold/Spikes</a>
       </div>
     </div>
   );

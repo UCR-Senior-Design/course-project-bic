@@ -27,7 +27,7 @@
 .logo {
     width: 37px;
     height: auto;
-    margin-right: -900px;
+    margin-right: -800px;
     /* Add spacing between the logo and the title */
 }
 
@@ -38,8 +38,6 @@
     margin-left: -2px;
     /* Adjust the margin-left to move the logo more to the left */
 }
-
-
 
 .home-link,
 .about-link {
@@ -53,12 +51,22 @@
     text-decoration: underline;
 }
 
-.inputdatasets-link {
+.inputdata-link {
     color: #fff;
     text-decoration: none;
     margin-right: 10px
 }
 
-.inputdatasets-link:hover {
+.inputdata-link:hover {
+    text-decoration: underline;
+}
+
+.thres-spike-link {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px
+}
+
+.thres-spike-link:hover {
     text-decoration: underline;
 }

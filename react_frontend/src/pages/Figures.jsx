@@ -173,7 +173,6 @@ const Figures = () => {
     return `${runNumber}`;
   };
 
-
   return (
     <div>
       <Container className="mt-5">
@@ -182,7 +181,7 @@ const Figures = () => {
         {/* Render each SVG image stacked */}
         {svgPaths.map((path, index) => (
           <div key={index} className="figures">
-            <div className="subject-number">{path.split('/')[0]} {renderFigureName(path)}: </div>
+            <div className="subject-number">{path.split('/')[0]} {renderFigureName(path)}</div>
             <img
               src={`${baseURL}/${path}`}
               alt=""
