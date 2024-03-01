@@ -279,19 +279,38 @@ CORS(app)
 # Define global variable for data path
 base_path = None
 
+# @app.route('/set_data_path', methods=['POST'])
+# def set_data_path():
+#     data_path = request.json.get('data_path')  # Assuming JSON payload with 'data_path' key
+#     if data_path:
+#         # Check if the specified directory exists
+#         if os.path.exists(data_path):
+#             global base_path
+#             base_path = data_path
+#             return jsonify({'message': 'Data path set successfully'})
+#         else:
+#             return jsonify({'error': 'Specified directory does not exist'}), 400
+#     else:
+#         return jsonify({'error': 'Specified directory does not exist'}), 400
 @app.route('/set_data_path', methods=['POST'])
 def set_data_path():
     data_path = request.json.get('data_path')  # Assuming JSON payload with 'data_path' key
     if data_path:
         # Check if the specified directory exists
         if os.path.exists(data_path):
-            global base_path
-            base_path = data_path
-            return jsonify({'message': 'Data path set successfully'})
+            # Check if the specified directory contains any subject folders
+            subjects = [entry for entry in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, entry)) and entry.startswith('sub-')]
+            if subjects:
+                global base_path
+                base_path = data_path
+                return jsonify({'message': 'Data path set successfully'})
+            else:
+                return jsonify({'error': 'No subjects'}), 400
         else:
             return jsonify({'error': 'Specified directory does not exist'}), 400
     else:
-        return jsonify({'error': 'Specified directory does not exist'}), 400
+        return jsonify({'error': 'Data path not provided'}), 400
+
 
 @app.route('/api/subjects')
 def get_subjects():
