@@ -1,22 +1,29 @@
-/* .container {
-    margin-top: 70px;
-    margin-left: 350px;
-} */
-
 .container {
-    margin-top: 70px;
-    margin-left: 350px;
-    display: flex;
-    flex-wrap: wrap; /* Allow images to wrap to the next line if needed */
-    justify-content: flex-start; /* Align items to the start */
-  }
-  
-  .figures {
-    margin: 30px; /* Adjust margin between images */
-    position: relative; /* Set position to relative to position the subject number */
-  }
-  
-  .img-fluid {
-    width: 100%; /* Ensure image fills its container */
-  }
-  
+  margin-top: 70px;
+  margin-left: 350px;
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow images to wrap to the next line if needed */
+  justify-content: flex-start;
+  /* Align items to the start */
+}
+
+.figures {
+  margin: 30px;
+  position: relative;
+  /* Set position to relative to position the subject number */
+}
+
+.img-fluid {
+  width: 100%;
+  margin-bottom: 30px;
+  /* Adjust margin between images */
+  /* Ensure image fills its container */
+}
+
+.header-container {
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 250px;
+  font-size: 20px;
+}

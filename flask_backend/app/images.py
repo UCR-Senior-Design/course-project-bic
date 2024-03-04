@@ -343,7 +343,7 @@ def get_figures():
             fullName = f"{parts[1]}_{parts[3]}".replace('.svg', '')
             
         else:
-            task = 'other'
+            task = 'anatomical'
             name = '_'.join(parts[1:]).replace('.svg', '')
             fullName = '_'.join(parts[1:]).replace('.svg', '')
         
@@ -443,7 +443,7 @@ def get_svg_paths():
                 # Append paths of SVG files within the "figures" directory
                 for file in os.listdir(figures_path):
                     if file.endswith('.svg'):
-                        task_type = file.split('_')[1].split('-')[1] if 'task-' in file else 'other'
+                        task_type = file.split('_')[1].split('-')[1] if 'task-' in file else 'anatomical'
                         svg_paths.append({
                             'path': os.path.join(subject_folder, 'figures', file),
                             'task_type': task_type

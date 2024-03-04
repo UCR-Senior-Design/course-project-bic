@@ -137,6 +137,7 @@ const Figures = () => {
         setError('Failed to fetch SVG paths. Please try again later.'); // Set error message
       });
   }, [taskName]); // This effect depends on taskName
+
   const setMaxDimensions = (width, height) => {
     if (width > height) {
       return { maxWidth: '800px' };
@@ -147,30 +148,28 @@ const Figures = () => {
 
   // const renderFigureName = (path) => {
   //   // extract the run number from the path 
-  //   const runNumber = path.split('/')[0].split('-')[1];
-  //   return `Run ${runNumber}`;
+  //   const parts = path.split('/');
+  //   const filename = parts[parts.length - 1]; // get the filename from the path
+  //   const runNumber = filename.split('_')[2]; // split the filename by '_' and get the second part
+  //   return `${runNumber}`;
   // };
 
+  const renderSubjectHeader = (path, index) => {
+    // extract the subject number from the path 
+    const parts = path.split('/');
+    const subjectNumber = parts[parts.length - 3]; // get the subject number from the path
+    if (index === 0 || subjectNumber !== svgPaths[index - 1].split('/')[3]) {
+      return <h2>{subjectNumber}</h2>;
+    }
+    return null;
+  };
 
-  // const renderFigureName = (path, index) => {
-  //   // extract the subject number from the path
-  //   const subjectNumber = path.split('/')[0];
-  //   // generate run numbers for task "task-tv"
-  //   if (taskName === 'task-tv') {
-  //     const runNumber = index + 1;
-  //     return `${subjectNumber} run ${runNumber}`;
-  //   } else {
-  //     // for other tasks, only display the subject number
-  //     return subjectNumber;
-  //   }
-  // };
-
-  const renderFigureName = (path) => {
+  const renderRunNumber = (path) => {
     // extract the run number from the path 
     const parts = path.split('/');
     const filename = parts[parts.length - 1]; // get the filename from the path
     const runNumber = filename.split('_')[2]; // split the filename by '_' and get the second part
-    return `${runNumber}`;
+    return <p>{runNumber}</p>;
   };
 
   return (
@@ -181,7 +180,9 @@ const Figures = () => {
         {/* Render each SVG image stacked */}
         {svgPaths.map((path, index) => (
           <div key={index} className="figures">
-            <div className="subject-number">{path.split('/')[0]} {renderFigureName(path)}</div>
+            {renderSubjectHeader(path, index)}
+            {renderRunNumber(path)}
+            {/* <div className="subject-number">{path.split('/')[0]} {renderFigureName(path)}</div> */}
             <img
               src={`${baseURL}/${path}`}
               alt=""
