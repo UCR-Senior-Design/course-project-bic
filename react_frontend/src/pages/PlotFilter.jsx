@@ -18,7 +18,7 @@ function PlotFilter(){
   const [threshold, setThreshold] = useState(defaultThreshold);
   const [numSpikes, setNumSpikes] = useState(defaultSpike);
   const [plots, setPlots] = useState([]);
-  const baseURL = 'http://localhost:8080';
+  const baseURL = 'http://127.0.0.1:5000/static/tmp';
   const [error, setError] = useState('');
   //const [imageUrl, setImageUrl] = useState('');
   // Define a default threshold value
@@ -37,19 +37,20 @@ function PlotFilter(){
     .catch(error => console.error('Error fetching subjects:', error));
   }, []);
 
+
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent form from refreshing the page on submit
-    fetch(`${baseURL}/api/filter_plot?subject_id=${selectedSubject}&magnitude=${magnitude}&threshold=${threshold}&max_spikes=${numSpikes}`)
+    fetch(`http://127.0.0.1:5000/api/filter_plot?subject_id=${selectedSubject}&magnitude=${magnitude}&threshold=${threshold}&max_spikes=${numSpikes}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
-        setPlots(data.plots); // Assuming the Flask endpoint returns a list of plot URLs
+        setPlots(data.plots_paths);
       })
       .catch(error => {
         console.error('Error fetching plots:', error);
         setError('Error fetching plots: ' + error.message);
       });
-  };
+  }
 
   
   return (
@@ -86,15 +87,13 @@ function PlotFilter(){
       </form>
 
       <div>
-        
-          <div>
-            <h2>Generated Plots</h2>
-            {plots.map((plot, index) => (
-            // Assuming plots are URLs to the images
-            <img key={index} src={plot} alt={`Plot ${index}`} style={{ maxWidth: '100%', marginBottom: '20px' }} />
-          ))}
-            
-          </div>
+      {plots.length > 0 ? (
+    plots.map((plot, index) => (
+      <img key={index} src={`${baseURL}/${plot}`} alt={`Plot ${index + 1}`} style={{ maxWidth: '100%', marginBottom: '10px' }} />
+    ))
+  ) : (
+    <p>No plots to display.</p>
+  )}
         
       </div>
     </div>

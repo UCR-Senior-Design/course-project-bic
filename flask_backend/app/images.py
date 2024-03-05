@@ -5,6 +5,8 @@ import re
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
+import traceback
+import shutil
 
 app = Flask(__name__)
 CORS(app)
@@ -379,52 +381,87 @@ def get_subject_tsv_files(subject_id):
 
     return jsonify({'tsv_files': tsv_files})
 
+#put later in a different place
+def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, max_spikes=5):
+    base_path = '/home/blore005/data/derivatives'
+    output_path = '/home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/static/tmp'
+    subjects = [subject_id] if subject_id != 'all' else [d for d in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, d)) and d.startswith('sub-')]
+    #plots = []
+    plots_paths = []
+
+    for subject_folder in subjects:
+        subject_folder_path = os.path.join(base_path, subject_folder)
+        if os.path.isdir(subject_folder_path):
+            func_folder_path = os.path.join(subject_folder_path, 'func')
+            if os.path.exists(func_folder_path):
+                for file_name in os.listdir(func_folder_path):
+                    if file_name.endswith('.tsv'):
+                        pattern = r'sub-(\d+)_task-\w+_run-(\d+)_desc'
+                        match = re.search(pattern, file_name)
+
+                        if match:
+                            subject_number = match.group(1)
+
+                        tsv_path = os.path.join(func_folder_path, file_name)
+                        df = pd.read_csv(tsv_path, delimiter='\t')
+
+                        # Framewise Displacement Plot with Spike Highlighting
+                        fd_plot_filename = f'fd_plot_{file_name[:-4]}.png'
+                        fd_plot_path = os.path.join(output_path, fd_plot_filename)
+
+                        # Remove existing plot file if it exists
+                        if os.path.exists(fd_plot_path):
+                            os.remove(fd_plot_path)
+                        
+                        plt.figure(figsize=(10, 6))
+                        sns.lineplot(data=df['framewise_displacement'], label='Framewise Displacement')
+
+                        # Highlight spikes that exceed the threshold
+                        spikes = df['framewise_displacement'] > threshold
+                        spike_count = spikes.sum()
+                        if spike_count <= max_spikes:
+                            plt.scatter(df.index[spikes], df['framewise_displacement'][spikes], label='Spikes', edgecolor='r', facecolor='none', s=magnitude*30, linewidths=2)
+
+                            plt.title(f'Subject {subject_number} Framewise Displacement Plot')
+                            plt.xlabel('Time')
+                            plt.ylabel('Framewise Displacement')
+                            plt.legend()
+                            plt.savefig(fd_plot_path)
+                            plt.close()
+
+                            plots_paths.append(fd_plot_filename) 
+
+    return jsonify({'plots_paths': plots_paths})
+
+
+def clear_temp_folder(folder_path):
+    for filename in os.listdir(folder_path):
+        file_path = os.path.join(folder_path, filename)
+        try:
+            if os.path.isfile(file_path) or os.path.islink(file_path):
+                os.unlink(file_path)
+            elif os.path.isdir(file_path):
+                shutil.rmtree(file_path)
+        except Exception as e:
+            print(f'Failed to delete {file_path}. Reason: {e}')
+
 
 @app.route('/api/filter_plot', methods=['GET'])
-def api_filter_plot():
+def api_filter_plot(): 
+    temp_folder_path = '/home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/static/tmp'
+    clear_temp_folder(temp_folder_path)
     subject_id = request.args.get('subject_id', default='all', type=str)
     magnitude = request.args.get('magnitude', default=1.0, type=float)
     threshold = request.args.get('threshold', default=0.5, type=float)
     max_spikes = request.args.get('max_spikes', default=10, type=int)
+    try:
+        plots = filter_plot(subject_id, magnitude, threshold, max_spikes)
+        return plots
+    except Exception as e:
+        app.logger.error(traceback.format_exc())
+        return jsonify({"error": str(e)}), 500
 
-    plots = filter_plot(subject_id, magnitude, threshold, max_spikes)
-    
-    if not plots:
-        return jsonify({"error": "No plots generated"}), 404
 
-    
-    return jsonify({"plots": plots})
-
-#put later in a different place
-def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, max_spikes=5):
-    base_path = '/home/blore005/data/derivatives'
-    subjects = [subject_id] if subject_id != 'all' else [d for d in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, d)) and d.startswith('sub-')]
-    plots = []
-
-    for sub in subjects:
-        sub_path = os.path.join(base_path, sub)
-        tsv_files = [f for f in os.listdir(sub_path) if f.endswith('.tsv') and os.path.isfile(os.path.join(sub_path, f))]
-        
-        for file in tsv_files:
-            data_path = os.path.join(sub_path, file)
-            data = pd.read_csv(data_path, sep='\t')
-            spikes_data = data[data['framewise_displacement'] > threshold]
-            spike_count = len(spikes_data[spikes_data['framewise_displacement'] > magnitude])
-            
-            # Only proceed if spike count meets criteria
-            if spike_count <= max_spikes:
-                plt.figure(figsize=(10, 6))
-                plt.plot(data['framewise_displacement'], label='Framewise Displacement')
-                plt.plot(spikes_data['framewise_displacement'], 'r.', label='Spikes > Threshold')
-                plt.title(f'{sub} - {file}\nSpike Count: {spike_count}')
-                plt.xlabel('Time')
-                plt.ylabel('Framewise Displacement')
-                plt.legend()
-                plt.savefig(f'/tmp/{sub}_{file.split(".")[0]}_plot.png')
-                plt.close()
-                plots.append(f'/tmp/{sub}_{file.split(".")[0]}_plot.png')
-
-    return plots
 
 
 if __name__ == '__main__':
