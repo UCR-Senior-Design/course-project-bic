@@ -12,6 +12,7 @@ You can view all images created for a specific subject in one page. This allows 
 
 ### Viewing Images for a Specific Subject Type
 
+
 Alternatively, you can view all images created for a specific subject type in one page. This helps in analyzing trends and patterns across multiple subjects of the same type.
 
 ## Plotting
@@ -45,6 +46,7 @@ To SSH tunnel into the VM using VS Code, follow these steps:
 3. Click on View at the top of the page and then click Command Palette.
 4. Enter "Remote-SSH" in the command palette and choose "Open SSH Configuration File...". This will allow you to choose a config file in your home directory in the `.ssh` folder. The path should be similar to `/Users/<username>/.ssh/config`.
 5. If it's the first time using this, the config file will be filled with dummy information. Create something similar to:
+
 ```
 Host <name of your choice>
   HostName <VM External IP Address>
@@ -55,6 +57,7 @@ Host <name of your choice>
 
 Leave the passphrase empty.
 
+
 7. Add the public key to SSH keys on the GCP VM instance.
 8. Now you can connect to the VM by going to View/Command Palette again, typing in "Remote-SSH", and choosing "Connect to Host...". Choose your host. You can see that the connection was established successfully on the bottom left of the page.
 
@@ -64,6 +67,7 @@ To run the website, follow these steps:
 
 1. Open a terminal.
 2. Navigate to the directory where the website is located:
+
 ```
 cd /home/blore005/course-project-bic
 ```
