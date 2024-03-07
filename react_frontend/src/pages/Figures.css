@@ -1,0 +1,38 @@
+.container {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    /* Allow images to wrap to the next line if needed */
+    justify-content: center;
+    align-items: center;
+    /* Align items to the start */
+}
+
+.figures {
+    margin: 30px;
+    /* margin-top: 30px;
+    margin-left: 230px; */
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    /* Align items vertically */
+    align-items: center;
+    /* Align items horizontally */
+    /* Set position to relative to position the subject number */
+}
+
+.img-fluid {
+    width: 700px;
+    margin-bottom: 5px;
+    max-width: 1000px;
+    /* Adjust margin between images */
+    /* Ensure image fills its container */
+}
+
+.header-container {
+    text-align: center;
+    /* margin-top: 20px;
+    margin-left: 300px;
+    font-size: 20px; */
+}

@@ -6,7 +6,10 @@
 }
 
 h2 {
-  font-size: 35px; /* Adjust the font size as needed */
+  font-size: 35px;
+  text-align: center;
+  align-items: center;
+  /* Adjust the font size as needed */
 }
 
 h3 {
@@ -22,6 +25,8 @@ p {
   display: flex;
   justify-content: center;
   margin-left: 250px;
+  flex-wrap: wrap;
+  align-items: center;
 }
 
 .plots {
@@ -29,5 +34,6 @@ p {
 }
 
 .plots img {
-  margin-bottom: 20px; /* Add margin between images */
+  margin-bottom: 20px;
+  /* Add margin between images */
 }

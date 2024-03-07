@@ -1,4 +1,64 @@
 .inputdata {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 60px;
+    align-items: center;
+    position: relative;
+}
+
+/* body {
+    /* background-image: url('../path/to/your/image.jpg');
+    background-size: cover;
+    /* background-position: center; */
+/* background-repeat: no-repeat; } 
+    */
+
+.inputdata {
+    background: -moz-linear-gradient(45deg, rgba(5, 10, 27, 0.6), rgba(48, 98, 185, 0.69) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(5, 10, 27, 0.6), rgba(48, 98, 185, 0.69) 100%);
+    background: linear-gradient(45deg, rgba(5, 10, 27, 0.6), rgba(48, 98, 185, 0.69) 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.inputdata {
+    height: 100vh;
+    width: 1500px;
+}
+
+h1 {
+    font-size: 30px;
     text-align: center;
-    margin-left: 460px;
+}
+
+p {
+    font-size: 20px;
+    text-align: center;
+}
+
+.inputdata input[type="text"],
+.inputdata button[type="submit"] {
+    background-color: #fff;
+    /* Set background color to white */
+    border: 1px solid #ccc;
+    /* Add border for input and button */
+    padding: 5px 5px;
+    /* Add padding to input and button */
+    margin-bottom: 10px;
+    /* Add margin between input and button */
+    border-radius: 5px;
+    /* Add border radius for rounded corners */
+    color: #000000;
+}
+
+.inputdata button[type="submit"] {
+    cursor: pointer;
+    /* Change cursor to pointer on hover */
+}
+
+.inputdata button[type="submit"]:hover {
+    background-color: #f0f0f0;
+    /* Change background color on hover */
 }
