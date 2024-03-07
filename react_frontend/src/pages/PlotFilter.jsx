@@ -9,6 +9,8 @@ import './PlotFilter.css'
 
 function PlotFilter(){
   //Default inputs
+  const [isLoading, setIsLoading] = useState(false);
+
   const defaultThreshold = 0.5; 
   const defaultSpike = 5;
   const defaultMagnitude = 1.0;
@@ -16,9 +18,13 @@ function PlotFilter(){
   const [selectedSubject, setSelectedSubject] = useState('all');
   const [magnitude, setMagnitude] = useState(defaultMagnitude );
   const [threshold, setThreshold] = useState(defaultThreshold);
-  const [numSpikes, setNumSpikes] = useState(defaultSpike);
+ // const [numSpikes, setNumSpikes] = useState(defaultSpike);
+  const [spikeSelectionMode, setSpikeSelectionMode] = useState('exact'); // Options: 'exact', 'range'
+  const [exactSpikes, setExactSpikes] = useState(defaultSpike);
+  const [minSpikes, setMinSpikes] = useState('');
+  const [maxSpikes, setMaxSpikes] = useState('');
   const [plots, setPlots] = useState([]);
-  const baseURL = 'http://127.0.0.1:5000/static/tmp';
+  const baseURL = 'http://127.0.0.1:5000/static';
   const [error, setError] = useState('');
   //const [imageUrl, setImageUrl] = useState('');
   // Define a default threshold value
@@ -40,15 +46,25 @@ function PlotFilter(){
 
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent form from refreshing the page on submit
-    fetch(`http://127.0.0.1:5000/api/filter_plot?subject_id=${selectedSubject}&magnitude=${magnitude}&threshold=${threshold}&max_spikes=${numSpikes}`)
+    let queryParams = `subject_id=${selectedSubject}&magnitude=${magnitude}&threshold=${threshold}`;
+
+    if (spikeSelectionMode === 'exact') {
+      queryParams += `&exact_spikes=${exactSpikes}`;
+    } else if (spikeSelectionMode === 'range') {
+      queryParams += `&min_spikes=${minSpikes}&max_spikes=${maxSpikes}`;
+    }
+
+    fetch(`http://127.0.0.1:5000/api/filter_plot?${queryParams}`)
       .then(response => response.json())
       .then(data => {
         console.log(data);
         setPlots(data.plots_paths);
+        setIsLoading(false); // Stop loading once the data is received
       })
       .catch(error => {
         console.error('Error fetching plots:', error);
         setError('Error fetching plots: ' + error.message);
+        setIsLoading(false); // Stop loading on error
       });
   }
 
@@ -79,22 +95,60 @@ function PlotFilter(){
         </label>
         <br />
         <label>
-          Number of Spikes:
-          <input type="number" value={numSpikes} onChange={(e) => setNumSpikes(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Submit</button>
+  Spike Selection Mode:
+  <select value={spikeSelectionMode} onChange={(e) => setSpikeSelectionMode(e.target.value)}>
+    <option value="exact">Exact</option>
+    <option value="range">Range</option>
+  </select>
+</label>
+<br />
+
+{spikeSelectionMode === 'exact' && (
+  <label>
+    Exact Number of Spikes:
+    <input type="number" value={exactSpikes} onChange={(e) => setExactSpikes(e.target.value)} />
+  </label>
+)}
+
+{spikeSelectionMode === 'range' && (
+  <>
+    <label>
+      Min Number of Spikes:
+      <input type="number" value={minSpikes} onChange={(e) => setMinSpikes(e.target.value)} />
+    </label>
+    <br />
+    <label>
+      Max Number of Spikes:
+      <input type="number" value={maxSpikes} onChange={(e) => setMaxSpikes(e.target.value)} />
+    </label>
+    <br />
+  </>
+)}
+<br />
+<button type="submit" disabled={isLoading}>
+          {isLoading ? 'Loading...' : 'Submit'}
+        </button>
       </form>
 
+      {isLoading && (
+        <div>Loading plots...</div> // You can replace this with a spinner or any loading indicator you prefer
+      )}
       <div>
-      {plots.length > 0 ? (
-    plots.map((plot, index) => (
-      <img key={index} src={`${baseURL}/${plot}`} alt={`Plot ${index + 1}`} style={{ maxWidth: '100%', marginBottom: '10px' }} />
-    ))
-  ) : (
-    <p>No plots to display.</p>
-  )}
-        
+      {!isLoading && (
+            <div className="plots">
+            {plots.length > 0 ? (
+              plots.map((plot, index) => (
+                <div key={index}>
+                <p>{plot.subject} - {plot.task} - {plot.run}</p>
+                  <img
+                    src={`${baseURL}/${plot.path}`}
+                    alt=""
+                    className="img-fluid plot-image"
+                  />
+                  </div>
+                ))): (<p>No plots to display.</p>)}
+            </div>
+      )}
       </div>
     </div>
     </Container>
