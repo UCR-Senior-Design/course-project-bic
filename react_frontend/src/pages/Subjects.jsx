@@ -95,7 +95,7 @@ const Subjects = () => {
                   src={`${baseURL}/${path}`}
                   alt=""
                   className='img-fluid'
-                  style={{ width: `800px` }}
+                  style={{ width: `690px` }}
                 />
               </div>
             ))}
