@@ -306,8 +306,11 @@ def get_plots_by_type(plot_type):
 
 @app.route('/api/generate_spike_plots', methods=['GET'])
 def generate_spike_plots():
-    base_path = '/home/blore005/data/derivatives'  # Adjust the base path accordingly
-    output_path = '/home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/static/plots'  # Adjust the output path
+    #base_path = '/home/blore005/data/derivatives'  # Adjust the base path accordingly
+    if base_path is None:
+        return jsonify({'error': 'Data path is not set'}), 400
+        
+    output_path = '/home/blore005/course-project-bic/flask_backend/app/static/plots'  # Adjust the output path
 
     # Create output directory if it doesn't exist
     if not os.path.exists(output_path):
@@ -419,8 +422,12 @@ def get_subject_tsv_files(subject_id):
 
 #put later in a different place
 def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, exact_spikes=None, min_spikes=None, max_spikes=None):
-    base_path = '/home/blore005/data/derivatives'
+    #base_path = '/home/blore005/data/derivatives'
+    if base_path is None:
+        return jsonify({'error': 'Data path is not set'}), 400
+
     output_path = '/home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/static/tmp'
+
     subjects = [subject_id] if subject_id != 'all' else [d for d in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, d)) and d.startswith('sub-')]
     #plots = []
     plots_paths = {}
@@ -441,33 +448,22 @@ def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, exact_spikes=Non
                         tsv_path = os.path.join(func_folder_path, file_name)
                         df = pd.read_csv(tsv_path, delimiter='\t')
 
-                        # Framewise Displacement Plot with Spike Highlighting
-                        fd_plot_filename = f'fd_plot_{file_name[:-4]}.png'
-                        fd_plot_path = os.path.join(output_path, fd_plot_filename)
-
-                        # Remove existing plot file if it exists
-                        if os.path.exists(fd_plot_path):
-                            os.remove(fd_plot_path)
                         
-                        plt.figure(figsize=(10, 6))
-                        sns.lineplot(data=df['framewise_displacement'])
 
                         # Highlight spikes that exceed the threshold
                         spikes = df['framewise_displacement'] > threshold
                         spike_count = spikes.sum()
+                        if exact_spikes != None and exact_spikes == spike_count:
+                            # Framewise Displacement Plot with Spike Highlighting
+                            fd_plot_filename = f'fd_plot_{file_name[:-4]}.png'
+                            fd_plot_path = os.path.join(output_path, fd_plot_filename)
 
-                        def should_generate_plot():
-                            if exact_spikes is not None and spike_count == exact_spikes:
-                                return True
-                            elif min_spikes is not None and max_spikes is not None and min_spikes <= spike_count <= max_spikes:
-                                return True
-                            elif min_spikes is not None and spike_count >= min_spikes:
-                                return True
-                            elif max_spikes is not None and spike_count <= max_spikes:
-                                return True
-                            return False
-
-                        if should_generate_plot():
+                        # Remove existing plot file if it exists
+                            if os.path.exists(fd_plot_path):
+                                os.remove(fd_plot_path)
+                        
+                            plt.figure(figsize=(10, 6))
+                            sns.lineplot(data=df['framewise_displacement'])
                             plt.scatter(df.index[spikes], df['framewise_displacement'][spikes], label='Spikes', edgecolor='r', facecolor='none', s=magnitude*30, linewidths=2)
                             plt.title(f'Subject {subject_number} Framewise Displacement Plot')
                             plt.text(0.96, 0.90, f'Spikes: {spike_count}', horizontalalignment='right', verticalalignment='top', transform=plt.gca().transAxes, fontsize=10, bbox=dict(facecolor='white', alpha=0.5))
@@ -477,6 +473,30 @@ def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, exact_spikes=Non
                             plt.savefig(fd_plot_path)
                             plt.close()
                             plots_paths[f'fd_plot_{file_name[:-4]}'] = fd_plot_path
+
+                        elif min_spikes!= None and max_spikes!= None:
+                            if min_spikes <= spike_count and spike_count <= max_spikes:
+                                 # Framewise Displacement Plot with Spike Highlighting
+                                fd_plot_filename = f'fd_plot_{file_name[:-4]}.png'
+                                fd_plot_path = os.path.join(output_path, fd_plot_filename)
+
+                        # Remove existing plot file if it exists
+                                if os.path.exists(fd_plot_path):
+                                     os.remove(fd_plot_path)
+                        
+                                plt.figure(figsize=(10, 6))
+                                sns.lineplot(data=df['framewise_displacement'])
+                                plt.scatter(df.index[spikes], df['framewise_displacement'][spikes], label='Spikes', edgecolor='r', facecolor='none', s=magnitude*30, linewidths=2)
+                                plt.title(f'Subject {subject_number} Framewise Displacement Plot')
+                                plt.text(0.96, 0.90, f'Spikes: {spike_count}', horizontalalignment='right', verticalalignment='top', transform=plt.gca().transAxes, fontsize=10, bbox=dict(facecolor='white', alpha=0.5))
+                                plt.xlabel('Time')
+                                plt.ylabel('Framewise Displacement')
+                                plt.legend()
+                                plt.savefig(fd_plot_path)
+                                plt.close()
+                                plots_paths[f'fd_plot_{file_name[:-4]}'] = fd_plot_path
+                             
+                                plots_paths[f'fd_plot_{file_name[:-4]}'] = fd_plot_path
 
     # List to store paths of all plot files
     all_plots = []
@@ -516,7 +536,7 @@ def filter_plot(subject_id='all', magnitude=1.0, threshold=0.5, exact_spikes=Non
     return jsonify({'plots_paths': all_plots})
 
    # return jsonify({'plots_paths': plots_paths})
-
+ 
 
 def clear_temp_folder(folder_path):
     for filename in os.listdir(folder_path):
@@ -537,8 +557,9 @@ def api_filter_plot():
     magnitude = request.args.get('magnitude', default=1.0, type=float)
     threshold = request.args.get('threshold', default=0.5, type=float)
     exact_spikes = request.args.get('exact_spikes', default=None, type=int)
-    max_spikes = request.args.get('max_spikes', default=None, type=int)
     min_spikes = request.args.get('min_spikes', default=None, type=int)
+    max_spikes = request.args.get('max_spikes', default=None, type=int)
+
     try:
         plots = filter_plot(subject_id, magnitude, threshold, exact_spikes, min_spikes, max_spikes)
         return plots
