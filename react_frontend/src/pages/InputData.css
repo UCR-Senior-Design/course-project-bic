@@ -1,64 +1,75 @@
-.inputdata {
+body {
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: calc(100vh - 60px);
     margin-top: 60px;
-    align-items: center;
-    position: relative;
 }
 
-/* body {
-    /* background-image: url('../path/to/your/image.jpg');
-    background-size: cover;
-    /* background-position: center; */
-/* background-repeat: no-repeat; } 
-    */
-
 .inputdata {
-    background: -moz-linear-gradient(45deg, rgba(5, 10, 27, 0.6), rgba(48, 98, 185, 0.69) 100%);
-    background: -webkit-linear-gradient(45deg, rgba(5, 10, 27, 0.6), rgba(48, 98, 185, 0.69) 100%);
+    padding: 20px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    width: 90%; /* Adjust width to 90% of the viewport width */
+    max-width: 500px; /* Set maximum width to 500px */
     background: linear-gradient(45deg, rgba(5, 10, 27, 0.6), rgba(48, 98, 185, 0.69) 100%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-.inputdata {
-    height: 100vh;
-    width: 1500px;
+
+@media only screen and (max-width: 600px) {
+    /* Adjustments for smaller devices */
+    .inputdata {
+        padding: 10px;
+        border-width: 1px;
+    }
 }
 
-h1 {
-    font-size: 30px;
+@media only screen and (min-width: 768px) {
+    /* Adjustments for medium-sized devices */
+    .inputdata {
+        padding: 30px;
+    }
+}
+
+.inputdata h1 {
+    align-items: center;
     text-align: center;
 }
 
-p {
-    font-size: 20px;
-    text-align: center;
-}
-
-.inputdata input[type="text"],
-.inputdata button[type="submit"] {
-    background-color: #fff;
-    /* Set background color to white */
-    border: 1px solid #ccc;
-    /* Add border for input and button */
-    padding: 5px 5px;
-    /* Add padding to input and button */
+.inputdata p {
     margin-bottom: 10px;
-    /* Add margin between input and button */
-    border-radius: 5px;
-    /* Add border radius for rounded corners */
-    color: #000000;
+    align-items: center;
+    text-align: center;
 }
 
-.inputdata button[type="submit"] {
+.inputdata form {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputdata input,
+.inputdata button {
+    background-color: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.inputdata input:focus,
+.inputdata button:focus {
+    outline: none;
+}
+
+.inputdata button {
+    background-color: #007bff;
+    color: #fff;
     cursor: pointer;
-    /* Change cursor to pointer on hover */
 }
 
-.inputdata button[type="submit"]:hover {
-    background-color: #f0f0f0;
-    /* Change background color on hover */
+.inputdata button:hover {
+    background-color: #0056b3;
 }
