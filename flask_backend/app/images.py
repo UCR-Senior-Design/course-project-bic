@@ -41,22 +41,40 @@ def set_data_path():
 
 @app.route('/api/subjects')
 def get_subjects():
-    global base_path  # Use the global base_path variable
+    global base_path  
     if base_path:
         # Filter out only directories starting with "sub-" 
         subjects = sorted([entry for entry in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, entry)) and entry.startswith('sub-')])
         return jsonify({'subjects': subjects})
     else:
-        return jsonify({'error': 'Data path not set. Please set the data path first.'}), 400
+        return jsonify({'error': 'Data path not set.'}), 400
 
 @app.route('/api/figures')
 def get_figures():
     if base_path is None:
         return jsonify({'error': 'Data path is not set'}), 400
 
-    figures_path = os.path.join(base_path, 'sub-01', 'figures')  # Adjust as needed
-    
-    # Filter out only files with specific criteria (e.g., end with ".svg")
+    # Get the list of directories within the base path
+    all_directories = [entry for entry in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, entry))]
+
+    # Filter directories to find subject folders
+    subject_folders = []
+    for directory in all_directories:
+        directory_path = os.path.join(base_path, directory)
+        # Check if the directory contains certain required files or subdirectories
+        if os.path.exists(os.path.join(directory_path, 'figures')):
+            subject_folders.append(directory)
+
+    if not subject_folders:
+        return jsonify({'error': 'No subject folders found'}), 400
+
+    # Select the first subject folder found
+    subject_folder = subject_folders[0]
+
+    # Construct the figures path using the selected subject folder
+    figures_path = os.path.join(base_path, subject_folder, 'figures') 
+
+    # Filter out only files that end with ".svg"
     figures = [entry for entry in os.listdir(figures_path) if os.path.isfile(os.path.join(figures_path, entry)) and entry.endswith('.svg')]
 
     # Process each figure filename to extract name and task
@@ -67,7 +85,7 @@ def get_figures():
         if 'task-' in parts[1]:
             task = parts[1]
             name = f"{parts[3]}_{parts[4]}".replace('.svg', '')
-            fullName = f"{parts[1]}_{parts[3]}".replace('.svg', '')
+            fullName = f"{parts[1]}_{parts[3]}_{parts[4]}".replace('.svg', '')
             
         else:
             task = 'anatomical'
