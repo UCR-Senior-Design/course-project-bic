@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import os
@@ -24,16 +22,22 @@ def set_data_path():
             # Check if the specified directory contains any subject folders
             subjects = [entry for entry in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, entry)) and entry.startswith('sub-')]
             if subjects:
-                global base_path
-                base_path = data_path
-                return jsonify({'message': 'Data path set successfully'})
+                # Take the first subject found
+                subject = subjects[0]
+                subject_path = os.path.join(data_path, subject)
+                # Check if the "figures" folder exists in the subject directory
+                if os.path.exists(os.path.join(subject_path, 'figures')) and os.path.isdir(os.path.join(subject_path, 'figures')):                    
+                    global base_path
+                    base_path = data_path
+                    return jsonify({'message': 'Data path set successfully'})
+                else:
+                    return jsonify({'error': '"figures" folder not found in the specified subject directory'}), 400
             else:
-                return jsonify({'error': 'No subjects'}), 400
+                return jsonify({'error': 'Path does not contain any subject folders.'}), 400
         else:
             return jsonify({'error': 'Specified directory does not exist'}), 400
     else:
         return jsonify({'error': 'Data path not provided'}), 400
-
 
 @app.route('/api/subjects')
 def get_subjects():
@@ -201,7 +205,7 @@ def generate_plots():
             if os.path.exists(func_folder_path):
                 for file_name in os.listdir(func_folder_path):
                     if file_name.endswith('.tsv'):
-                        # Regular expression pattern to extract subject number and run number
+                        # Expression pattern to extract subject number and run number
                         pattern = r'sub-(\d+)_task-\w+_run-(\d+)_desc'
                         # extract subject number and run number
                         match = re.search(pattern, file_name)
@@ -209,7 +213,11 @@ def generate_plots():
                             subject_number = match.group(1)
 
                         tsv_path = os.path.join(func_folder_path, file_name)
-                        df = pd.read_csv(tsv_path, delimiter='\t')
+                        # df = pd.read_csv(tsv_path, delimiter='\t')
+                        try:
+                            df = pd.read_csv(tsv_path, delimiter='\t')
+                        except Exception as e:
+                            return jsonify({'error': f'Error reading file: {str(e)}'}), 500
 
                         # Rotation Plot
                         rotation_plot_filename = f'rotation_plot_{file_name[:-4]}.png'

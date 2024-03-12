@@ -23,7 +23,7 @@ pid_http_server=$!
 
 # Run images.py in the background
 
-python3 /home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/images.py &
+python3 /home/blore005/course-project-bic/flask_backend/app/images.py &
 
 
 # Store the PID of the background process
@@ -31,7 +31,7 @@ pid_images=$!
 
 # Run npm dev server
 
-cd /home/cpasc012/Project_Tester_CS178B/course-project-bic/react_frontend
+cd /home/blore005/course-project-bic/react_frontend
 
 npm run dev
 
