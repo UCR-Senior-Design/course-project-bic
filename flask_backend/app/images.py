@@ -422,7 +422,7 @@ def api_filter_plot():
     max_spikes = request.args.get('max_spikes', default=None, type=int)
 
     try:
-        plots = filter_plot(magnitude, threshold,max_spikes)
+        plots = filter_plot(magnitude, threshold, max_spikes)
         return plots
     except Exception as e:
         app.logger.error(traceback.format_exc())

@@ -15,12 +15,11 @@ function PlotFilter(){
   const defaultSpike = 5;
   const defaultMagnitude = 1.0;
   
-  const [selectedSubject, setSelectedSubject] = useState('all');
+  //const [selectedSubject, setSelectedSubject] = useState('all');
   const [magnitude, setMagnitude] = useState(defaultMagnitude );
   const [threshold, setThreshold] = useState(defaultThreshold);
  // const [numSpikes, setNumSpikes] = useState(defaultSpike);
-  
-  const [maxSpikes, setMaxSpikes] = useState('');
+  const [maxSpikes, setMaxSpikes] = useState(defaultSpike);
   const [plots, setPlots] = useState([]);
   const baseURL = 'http://localhost:8080';
   const [error, setError] = useState('');
@@ -37,7 +36,7 @@ function PlotFilter(){
   
   const handleSubmit = (event) => {
     event.preventDefault(); // Prevent form from refreshing the page on submit
-    let queryParams = `magnitude=${magnitude}&threshold=${threshold}&max_spikes${max_spikes}`;
+    let queryParams = `magnitude=${magnitude}&threshold=${threshold}&max_spikes=${maxSpikes}`;
 
     fetch(`http://127.0.0.1:5000/api/filter_plot?${queryParams}`)
       .then(response => response.json())
