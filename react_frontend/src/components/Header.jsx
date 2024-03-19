@@ -13,7 +13,7 @@ const Header = () => {
       <div className="navigation">
         <a href="/inputdata" className="inputdata-link">Input Datasets</a>
         <a href="/home" className="home-link">Home</a>
-        <a href="/thres-spike" className="thres-spike-link">Threshold/Spikes</a>
+        <a href="/plotfilter" className="thres-spike-link">Threshold/Spikes</a>
       </div>
     </div>
   );

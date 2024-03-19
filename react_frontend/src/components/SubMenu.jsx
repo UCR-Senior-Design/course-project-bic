@@ -121,7 +121,7 @@ const SubMenu = ({ title, items, type, icon }) => {
                 <SidebarLabel>Displacement</SidebarLabel>
               </SidebarLink>
             </>
-          )}
+          )} 
         </div>
       )}
     </>

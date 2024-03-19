@@ -10,7 +10,7 @@ const Plot = () => {
   const [error, setError] = useState(null);
   const baseURL = 'http://localhost:8080';
 
-  useEffect(() => {
+  useEffect(() => { 
     fetch(`http://127.0.0.1:5000/get_plots/${subjectFolder}`)
       .then(response => {
         if (!response.ok) {

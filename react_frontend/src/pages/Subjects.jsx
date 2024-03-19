@@ -19,7 +19,7 @@ const Subjects = () => {
         return response.json();
       })
       .then(data => {
-        setSubjectTitle(subjectFolder); // Set the subject folder as the title
+        setSubjectTitle(getSubjectTitle(subjectFolder)); // Set the subject folder as the title
         setSvgPaths(data.svg_paths);
       })
       .catch(error => {
@@ -28,25 +28,61 @@ const Subjects = () => {
       });
   }, [subjectFolder]);
 
+
+  // Function to get subject title based on subject folder name
+  const getSubjectTitle = (folderName) => {
+    // Example: Convert "sub-01" to "Subject 1"
+    return `Subject ${parseInt(folderName.split('-')[1])}`;
+  };
+
   // Function to group SVG paths by task_type
   const groupByTaskType = () => {
     return svgPaths.reduce((acc, svgPath) => {
       const { path, task_type } = svgPath;
-      if (!acc[task_type]) {
-        acc[task_type] = [];
+      let taskTypeWithPrefix = task_type; // Initialize with task_type
+
+      // add the prefix "task-" if task_type is not "anatomical"
+      if (task_type !== 'anatomical') {
+        taskTypeWithPrefix = `task-${task_type}`;
       }
-      acc[task_type].push(path);
+
+      if (!acc[taskTypeWithPrefix]) {
+        acc[taskTypeWithPrefix] = [];
+      }
+      acc[taskTypeWithPrefix].push(path);
       return acc;
     }, {});
   };
 
+  const getImageName = (path, taskType) => {
+    // Split the path by underscores
+    const parts = path.split('_');
+
+    // Check if the taskType is "anatomical" or has "task" prefix
+    if (taskType === 'anatomical') {
+      // If "anatomical", return the last part before .svg
+      return parts[parts.length - 2];
+    } else if (taskType.startsWith('task')) {
+      // If has "task" prefix, skip the first three parts (subject number, task type, and "run-01") and return the remaining part before .svg
+      return parts.slice(3, -1).join('_');
+    } else {
+      // For other cases, return the last part before .svg
+      return parts[parts.length - 2];
+    }
+  };
+
+
+
+
   return (
     <div>
-      <div className="subject-title-container"> {/* Container for subject title */}
-        <h1 className="subject-title">{subjectTitle}</h1> {/* Display subject folder title */}
-      </div>
       <Container className="mt-5">
         {error && <Alert variant="danger">{error}</Alert>} {/* Display error message */}
+      </Container>
+      <div className="header-container"> {/* Header outside of container */}
+        <h1>{subjectTitle}</h1>
+      </div>
+      <Container>
 
         {Object.entries(groupByTaskType()).map(([taskType, paths], index) => (
           <div key={index}>
@@ -54,13 +90,13 @@ const Subjects = () => {
             {paths.map((path, index) => (
 
               <div key={index} className='subjects'>
+                <p>{path.split('/').pop()}</p> {/* Display image name as label */}
                 <img
                   src={`${baseURL}/${path}`}
                   alt=""
                   className='img-fluid'
-                  style={{ width: `800px` }}
+                  style={{ width: `690px` }}
                 />
-                <p>{path.split('/').pop()}</p> {/* Display image name as label */}
               </div>
             ))}
           </div>
@@ -69,5 +105,6 @@ const Subjects = () => {
     </div>
   );
 };
+
 
 export default Subjects;
