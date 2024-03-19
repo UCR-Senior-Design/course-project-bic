@@ -54,7 +54,7 @@ function PlotFilter(){
 
   
   return (
-    <Container className="mt-5">
+    <Container className="boxed">
     <div>
       <form onSubmit={handleSubmit}>
 

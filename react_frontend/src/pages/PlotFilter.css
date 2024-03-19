@@ -3,13 +3,18 @@
     margin-left: 350px;
 } */
 
-.container {
-    margin-top: 65px;
-    margin-left: 450px;
+.boxed {
+    margin-top: 200px;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+   
+    margin-right: 300px;
     display: flex;
     flex-wrap: wrap;
     /* Allow images to wrap to the next line if needed */
     justify-content: flex-start;
+    align-items: center; /* Center vertically */
     /* Align items to the start */
   }
   
