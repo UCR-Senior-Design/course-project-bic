@@ -1,5 +1,3 @@
-
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import './InputData.css';
@@ -37,23 +35,24 @@ const DataPathForm = () => {
     };
 
     return (
-        <div className="inputdata">
-            <h1>Data Path Configuration</h1>
-            <p>Please enter the path to your data:</p>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    value={dataPath}
-                    onChange={handleInputChange}
-                    placeholder="Enter data path"
-                />
-                <button type="submit">Set Data Path</button>
-            </form>
-            {message && <p>{message}</p>}
-            {error && <p>{error}</p>}
+        <div class="box">
+            <div className="inputdata">
+                <h1>Data Path Configuration</h1>
+                <p>Please enter the path to your data:</p>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type="text"
+                        value={dataPath}
+                        onChange={handleInputChange}
+                        placeholder="Enter data path"
+                    />
+                    <button type="submit">Set Data Path</button>
+                </form>
+                {message && <p>{message}</p>}
+                {error && <p>{error}</p>}
+            </div>
         </div>
     );
 };
 
 export default DataPathForm;
-
