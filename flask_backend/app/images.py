@@ -309,7 +309,7 @@ def filter_plot(magnitude=1.0, threshold=0.5, max_spikes=None):
         return jsonify({'error': 'Data path is not set'}), 400
 
     #output_path = '/home/cpasc012/Project_Tester_CS178B/course-project-bic/flask_backend/app/static/tmp'
-    output_path = os.path.join(base_path, 'plots/tmp')  # Adjust the output path based on base_path
+    output_path = os.path.join(base_path, 'tmp')  # Adjust the output path based on base_path
 
     # Create output directory if it doesn't exist
     if not os.path.exists(output_path):
@@ -410,7 +410,7 @@ def clear_temp_folder(folder_path):
 
 @app.route('/api/filter_plot', methods=['GET'])
 def api_filter_plot(): 
-    temp_folder_path= os.path.join(base_path, 'plots/tmp')  # Adjust the output path based on base_path
+    temp_folder_path= os.path.join(base_path, 'tmp')  # Adjust the output path based on base_path
     # Create output directory if it doesn't exist
     if not os.path.exists(temp_folder_path):
         os.makedirs(temp_folder_path)
