@@ -43,7 +43,7 @@ const Plot = () => {
   const groupedPlots = groupPlotsBySubject();
 
   return (
-    <div>
+    <div className="images">
       <Container className="mt-5">
         {error && <Alert variant="danger">{error}</Alert>}
       </Container>
