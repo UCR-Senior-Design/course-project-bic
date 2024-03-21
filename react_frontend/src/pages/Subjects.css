@@ -1,18 +1,14 @@
 .container {
   margin-top: 70px;
   display: flex;
-  flex-wrap: wrap;
-  /* Allow images to wrap to the next line if needed */
+  flex-wrap: wrap; /* Allow images to wrap to the next line if needed */
   justify-content: center;
   align-items: center;
-  /* Align items to the start */
 }
 
 .subjects {
   margin: 30px;
   margin-bottom: 60px;
-  /* margin-top: 10px;
-  margin-left: 73px; */
   position: relative;
   display: flex;
   flex-direction: column;
