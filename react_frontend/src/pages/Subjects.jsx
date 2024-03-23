@@ -72,8 +72,6 @@ const Subjects = () => {
   };
 
 
-
-
   return (
     <div>
       <Container className="mt-5">
@@ -91,12 +89,13 @@ const Subjects = () => {
 
               <div key={index} className='subjects'>
                 <p>{path.split('/').pop()}</p> {/* Display image name as label */}
-                <img
-                  src={`${baseURL}/${path}`}
-                  alt=""
-                  className='img-fluid'
-                  style={{ width: `690px` }}
-                />
+                <object
+                  type="image/svg+xml"
+                  data={`${baseURL}/${path}`}
+                  className="img-fluid"
+                >
+                  Your browser does not support SVGs
+                </object>
               </div>
             ))}
           </div>

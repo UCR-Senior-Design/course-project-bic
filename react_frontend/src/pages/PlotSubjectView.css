@@ -1,24 +1,23 @@
-.header-container {
+.images .header-container {
     text-align: center;
     margin-top: 20px;
     margin-left: 250px;
-    font-size: 20px;
-    align-items: center;
 }
 
-.container {
+.images .header-container h1 {
+    font-size: 60px;
+}
+
+.images .container {
     display: flex;
     justify-content: center;
     margin-left: 250px;
-    flex-wrap: wrap;
-    align-items: center;
 }
-
-.plots {
+  
+.images .plots {
     margin: 20px;
 }
-
-.plots img {
-    margin-bottom: 20px;
-    /* Add margin between images */
-}
+  
+.images .plots img {
+    margin-bottom: 20px; /* Add margin between images */
+}  

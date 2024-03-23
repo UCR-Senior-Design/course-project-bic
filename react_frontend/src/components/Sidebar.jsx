@@ -21,26 +21,10 @@ const SidebarWrap = styled.div`
   width: 100%;
 `;
 
-// const Sidebar = () => {
-//   const [subjects, setSubjects] = useState([]);
-//   const [figures, setFigures] = useState({});
-
-//   useEffect(() => {
-//     fetch('http://127.0.0.1:5000/api/subjects')
-//       .then(response => response.json())
-//       .then(data => setSubjects(data.subjects))
-//       .catch(error => console.error('Error fetching subjects:', error));
-
-//     fetch('http://127.0.0.1:5000/api/figures')
-//       .then(response => response.json())
-//       .then(data => setFigures(groupFigures(data.figures)))
-//       .catch(error => console.error('Error fetching figures:', error));
-//   }, []);
-
 const Sidebar = () => {
   const [subjects, setSubjects] = useState([]);
   const [figures, setFigures] = useState({});
-  const [error, setError] = useState(null); // State variable to store error message
+  const [error, setError] = useState(null); 
 
   useEffect(() => {
     fetch('http://127.0.0.1:5000/api/subjects')
@@ -76,19 +60,7 @@ const Sidebar = () => {
     }, {});
   };
 
-  // Function to group figures by task
-  // const groupSubjects = (subjects) => {
-  //   return subjects.reduce((acc, subject) => {
-  //     const task = subject.task || 'none'; 
-  //     if (!acc[task]) {
-  //       acc[task] = [];
-  //     }
-  //     acc[task].push(subject.name);
-  //     return acc;
-  //   }, {});
-  // };
-
-  return (
+return (
     <>
       <Header />
       <SidebarNav sidebar={true}>

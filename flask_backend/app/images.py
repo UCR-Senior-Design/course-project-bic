@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 import os
@@ -24,35 +22,59 @@ def set_data_path():
             # Check if the specified directory contains any subject folders
             subjects = [entry for entry in os.listdir(data_path) if os.path.isdir(os.path.join(data_path, entry)) and entry.startswith('sub-')]
             if subjects:
-                global base_path
-                base_path = data_path
-                return jsonify({'message': 'Data path set successfully'})
+                # Take the first subject found
+                subject = subjects[0]
+                subject_path = os.path.join(data_path, subject)
+                # Check if the "figures" folder exists in the subject directory
+                if os.path.exists(os.path.join(subject_path, 'figures')) and os.path.isdir(os.path.join(subject_path, 'figures')):                    
+                    global base_path
+                    base_path = data_path
+                    return jsonify({'message': 'Data path set successfully'})
+                else:
+                    return jsonify({'error': '"figures" folder not found in the specified subject directory'}), 400
             else:
-                return jsonify({'error': 'No subjects'}), 400
+                return jsonify({'error': 'Path does not contain any subject folders.'}), 400
         else:
             return jsonify({'error': 'Specified directory does not exist'}), 400
     else:
         return jsonify({'error': 'Data path not provided'}), 400
 
-
 @app.route('/api/subjects')
 def get_subjects():
-    global base_path  # Use the global base_path variable
+    global base_path  
     if base_path:
         # Filter out only directories starting with "sub-" 
         subjects = sorted([entry for entry in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, entry)) and entry.startswith('sub-')])
         return jsonify({'subjects': subjects})
     else:
-        return jsonify({'error': 'Data path not set. Please set the data path first.'}), 400
+        return jsonify({'error': 'Data path not set.'}), 400
 
 @app.route('/api/figures')
 def get_figures():
     if base_path is None:
         return jsonify({'error': 'Data path is not set'}), 400
 
-    figures_path = os.path.join(base_path, 'sub-01', 'figures')  # Adjust as needed
-    
-    # Filter out only files with specific criteria (e.g., end with ".svg")
+    # Get the list of directories within the base path
+    all_directories = [entry for entry in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, entry))]
+
+    # Filter directories to find subject folders
+    subject_folders = []
+    for directory in all_directories:
+        directory_path = os.path.join(base_path, directory)
+        # Check if the directory contains certain required files or subdirectories
+        if os.path.exists(os.path.join(directory_path, 'figures')):
+            subject_folders.append(directory)
+
+    if not subject_folders:
+        return jsonify({'error': 'No subject folders found'}), 400
+
+    # Select the first subject folder found
+    subject_folder = subject_folders[0]
+
+    # Construct the figures path using the selected subject folder
+    figures_path = os.path.join(base_path, subject_folder, 'figures') 
+
+    # Filter out only files that end with ".svg"
     figures = [entry for entry in os.listdir(figures_path) if os.path.isfile(os.path.join(figures_path, entry)) and entry.endswith('.svg')]
 
     # Process each figure filename to extract name and task
@@ -63,7 +85,7 @@ def get_figures():
         if 'task-' in parts[1]:
             task = parts[1]
             name = f"{parts[3]}_{parts[4]}".replace('.svg', '')
-            fullName = f"{parts[1]}_{parts[3]}".replace('.svg', '')
+            fullName = f"{parts[1]}_{parts[3]}_{parts[4]}".replace('.svg', '')
             
         else:
             task = 'anatomical'
@@ -201,7 +223,7 @@ def generate_plots():
             if os.path.exists(func_folder_path):
                 for file_name in os.listdir(func_folder_path):
                     if file_name.endswith('.tsv'):
-                        # Regular expression pattern to extract subject number and run number
+                        # Expression pattern to extract subject number and run number
                         pattern = r'sub-(\d+)_task-\w+_run-(\d+)_desc'
                         # extract subject number and run number
                         match = re.search(pattern, file_name)
@@ -209,7 +231,11 @@ def generate_plots():
                             subject_number = match.group(1)
 
                         tsv_path = os.path.join(func_folder_path, file_name)
-                        df = pd.read_csv(tsv_path, delimiter='\t')
+                        # df = pd.read_csv(tsv_path, delimiter='\t')
+                        try:
+                            df = pd.read_csv(tsv_path, delimiter='\t')
+                        except Exception as e:
+                            return jsonify({'error': f'Error reading file: {str(e)}'}), 500
 
                         # Rotation Plot
                         rotation_plot_filename = f'rotation_plot_{file_name[:-4]}.png'

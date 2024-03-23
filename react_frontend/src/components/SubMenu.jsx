@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { CiImageOn } from 'react-icons/ci';
 import { IoPersonOutline } from 'react-icons/io5';
+import { VscGraph } from 'react-icons/vsc'; // Import VscGraph icon
 
 const SidebarLink = styled(Link)`
   display: flex;
@@ -40,11 +41,25 @@ const SubMenu = ({ title, items, type, icon }) => {
     }));
   };
 
+  // Determine which icon to display based on the type
+  const determineIcon = () => {
+    switch (type) {
+      case 'Subjects':
+        return <IoPersonOutline />;
+      case 'Figures':
+        return <CiImageOn />;
+      case 'Plots':
+        return <VscGraph />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
       <SidebarLink to="#" onClick={showSubnav}>
         <div>
-          {icon} {/* Display icon */}
+          {determineIcon()}
           <SidebarLabel>{title}</SidebarLabel>
         </div>
         <div>{subnav ? <RiArrowUpSFill /> : <RiArrowDownSFill />}</div>
