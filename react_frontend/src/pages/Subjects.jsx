@@ -72,23 +72,52 @@ const Subjects = () => {
   };
 
 
+  // return (
+  //   <div>
+  //     <Container className="mt-5">
+  //       {error && <Alert variant="danger">{error}</Alert>} {/* Display error message */}
+  //     </Container>
+  //     <div className="header-container"> {/* Header outside of container */}
+  //       <h1>{subjectTitle}</h1>
+  //     </div>
+  //     <Container>
+
+  //       {Object.entries(groupByTaskType()).map(([taskType, paths], index) => (
+  //         <div key={index}>
+  //           <h2>{taskType}</h2> {/* Render subheader with taskType */}
+  //           {paths.map((path, index) => (
+
+  //             <div key={index} className='subjects'>
+  //               <p>{path.split('/').pop()}</p> {/* Display image name as label */}
+  //               <object
+  //                 type="image/svg+xml"
+  //                 data={`${baseURL}/${path}`}
+  //                 className="img-fluid"
+  //               >
+  //                 Your browser does not support SVGs
+  //               </object>
+  //             </div>
+  //           ))}
+  //         </div>
+  //       ))}
+  //     </Container>
+  //   </div>
+  // );
   return (
-    <div>
+    <div className="subject-report">
       <Container className="mt-5">
-        {error && <Alert variant="danger">{error}</Alert>} {/* Display error message */}
+        {error && <Alert variant="danger">{error}</Alert>}
       </Container>
-      <div className="header-container"> {/* Header outside of container */}
+      <div className="header-container">
         <h1>{subjectTitle}</h1>
       </div>
       <Container>
-
         {Object.entries(groupByTaskType()).map(([taskType, paths], index) => (
           <div key={index}>
-            <h2>{taskType}</h2> {/* Render subheader with taskType */}
+            <h2>{taskType}</h2>
             {paths.map((path, index) => (
-
               <div key={index} className='subjects'>
-                <p>{path.split('/').pop()}</p> {/* Display image name as label */}
+                <p>{path.split('/').pop()}</p>
                 <object
                   type="image/svg+xml"
                   data={`${baseURL}/${path}`}
@@ -102,7 +131,7 @@ const Subjects = () => {
         ))}
       </Container>
     </div>
-  );
+  );  
 };
 
 

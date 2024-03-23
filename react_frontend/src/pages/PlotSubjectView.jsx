@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Alert } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import './PlotSubjectView.css';
+import './Plots.css';
 
 const Plot = () => {
   const { subjectFolder } = useParams();

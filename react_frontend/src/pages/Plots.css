@@ -1,8 +1,9 @@
 .images .header-container {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 70px;
   margin-left: 250px;
-  font-size: 20px;
+  margin-bottom: 20px;
+  font-size: 30px;
 }
 
 .images h2 {
@@ -10,7 +11,6 @@
 }
 
 .images h3 {
-  text-align: center;
   font-size: 35px;
 }
 
@@ -19,9 +19,11 @@
 }
 
 .images .container {
-  display: flex;
-  justify-content: center;
   margin-left: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .images .plots {
@@ -30,4 +32,7 @@
 
 .images .plots img {
   margin-bottom: 20px; /* Add margin between images */
+  max-width: 100%; /* Set maximum width to 100% */
+  height: auto; /* Maintain aspect ratio */
 }
+
