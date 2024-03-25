@@ -11,7 +11,7 @@ const SidebarNav = styled.nav`
   justify-content: center;
   position: fixed;
   top: 60px;
-  left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
+  left: ${({ $sidebar }) => ($sidebar ? '0' : '-100%')};
   transition: 350ms;
   z-index: 10;
   overflow-y: auto;
@@ -63,7 +63,7 @@ const Sidebar = () => {
 return (
     <>
       <Header />
-      <SidebarNav sidebar={true}>
+      <SidebarNav $sidebar="true">
         <SidebarWrap>
           {error && <div>Error: {error}</div>}
           {/* Render SubMenu for Subjects */}

@@ -35,7 +35,7 @@ const DataPathForm = () => {
     };
 
     return (
-        <div class="box">
+        <div className="box">
             <div className="inputdata">
                 <h1>Data Path Configuration</h1>
                 <p>Please enter the path to your data:</p>
