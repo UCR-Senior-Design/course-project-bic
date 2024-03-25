@@ -15,7 +15,7 @@ CORS(app)
 base_path = None
 @app.route('/set_data_path', methods=['POST'])
 def set_data_path():
-    data_path = request.json.get('data_path')  # Assuming JSON payload with 'data_path' key
+    data_path = request.json.get('data_path')  
     if data_path:
         # Check if the specified directory exists
         if os.path.exists(data_path):
@@ -47,7 +47,7 @@ def get_subjects():
         subjects = sorted([entry for entry in os.listdir(base_path) if os.path.isdir(os.path.join(base_path, entry)) and entry.startswith('sub-')])
         return jsonify({'subjects': subjects})
     else:
-        return jsonify({'error': 'Data path not set.'}), 400
+        return jsonify({'error': 'Data path is not set.'}), 400
 
 @app.route('/api/figures')
 def get_figures():
@@ -189,15 +189,19 @@ def get_svg_paths():
 
                 for file in os.listdir(figures_path):
                     if file.endswith('.svg'):
-                        task_type = file.split('_')[1].split('-')[1] if 'task-' in file else 'anatomical'
+                        task_type = file.split('_')[1] if 'task-' in file else 'anatomical'
+                        image_name_parts = file.split('_')
+                        
+                        if task_type == 'anatomical':
+                            image_name = '_'.join(image_name_parts[1:]).split('.')[0]
+                        else:
+                            image_name = 'Run ' + image_name_parts[2].split('-')[1] + ' - ' + '_'.join(image_name_parts[3:]).split('.')[0] 
 
                         svg_paths.append({
                             'path': os.path.join(subject_folder, 'figures', file),
-                            'task_type': task_type
+                            'task_type': task_type,
+                            'image_name': image_name
                         })
-
-
-    #Sort the image paths based on filenames
 
     svg_paths.sort(key=lambda x: x['path'])
     

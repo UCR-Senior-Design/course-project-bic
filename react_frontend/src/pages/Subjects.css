@@ -15,12 +15,27 @@
 }
 
 .subject-report .container {
+  margin-left: 250px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 250px;
+  align-items: center;
+  text-align: center;
 }
 
 .subject-report .subjects {
   margin: 20px;
+  
+}
+
+
+.subject-report .subjects object {
+  margin-bottom: 20px; /* Add margin between images */
+  max-width: 100%; /* Set maximum width to fit the container */
+  max-height: 450px; /* Set maximum height */
+  width: auto; /* Allow width to adjust based on height */
+  height: auto; /* Allow height to adjust based on width */
+  display: block; /* Ensures the image is centered within its parent container */
+  margin: 0 auto; /* Centers the image horizontally */
+  min-height: 400px;
 }
