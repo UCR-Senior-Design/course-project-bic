@@ -12,7 +12,7 @@ cleanup() {
 trap cleanup SIGINT
 
 # Run http server to serve images
-cd /home/inaz001/derivatives
+cd /home/blore005/data/derivatives
 
 python3 -m http.server --bind 127.0.0.1 8080 &
 
