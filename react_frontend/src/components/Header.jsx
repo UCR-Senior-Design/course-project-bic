@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import logoImg from '../logo1.jpg';
-import './Header.css'; // Import CSS file for styling
+import './Header.css';
 
 const Header = () => {
   return (
@@ -20,3 +19,4 @@ const Header = () => {
 };
 
 export default Header;
+

@@ -4,7 +4,6 @@
     padding: 0px 20px;
     height: 60px;
     width: 100%;
-    /* Ensure the header spans the entire width */
     position: fixed;
     top: 0;
     left: 0;
@@ -18,61 +17,34 @@
 .title {
     margin: 0;
     font-size: 18px;
-    display: flex;
-    flex: 0 0 auto;
-}
-
-.navigation {
-    display: flex;
+    flex: 1; /* Allow the title to take up remaining space */
 }
 
 .logo {
-    width: 37px;
-    display: flex;
-    height: auto;
-    flex: 0 0 auto;
-    margin-right: -865px;
-    /* Add spacing between the logo and the title */
+    margin-right: 10px; /* Add some spacing between the logo and the title */
 }
 
 .logo-img {
-    width: 90%;
-    height: 100%;
-    display: flex;
-    flex: 0 0 auto;
-    object-fit: contain;
-    margin-left: -2px;
-    /* Adjust the margin-left to move the logo more to the left */
+    width: 37px;
+    height: auto;
+}
+
+.navigation {
+    margin-left: auto; /* Push the navigation to the right */
 }
 
 .home-link,
-.about-link {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 10px;
-}
-
-.home-link:hover,
-.about-link:hover {
-    text-decoration: underline;
-}
-
-.inputdata-link {
-    color: #fff;
-    text-decoration: none;
-    margin-right: 10px
-}
-
-.inputdata-link:hover {
-    text-decoration: underline;
-}
-
+.about-link,
+.inputdata-link,
 .thres-spike-link {
     color: #fff;
     text-decoration: none;
-    margin-right: 10px
+    margin-left: 10px; /* Add spacing between navigation links */
 }
 
+.home-link:hover,
+.about-link:hover,
+.inputdata-link:hover,
 .thres-spike-link:hover {
     text-decoration: underline;
 }
