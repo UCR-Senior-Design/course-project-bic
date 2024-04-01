@@ -116,30 +116,6 @@ def get_figures():
 
     return jsonify({'figures': sorted_figures})
 
-@app.route('/plot_info')
-def get_tsv_files():
-    if base_path is None:
-        return jsonify({'error': 'Data path is not set'}), 400
-
-    func_path = os.path.join(base_path, 'sub-01', 'func')  # Adjust as needed
-    
-    # Filter out only files with specific criteria (e.g., end with ".tsv")
-    tsv_files = [entry for entry in os.listdir(func_path) if os.path.isfile(os.path.join(func_path, entry)) and entry.endswith('.tsv')]
-    
-    # Process each TSV file filename to extract task_name and run
-    processed_files = []
-    for tsv_file in tsv_files:
-        # Split the filename by '_' and extract task_name from part 1 and run from part 2
-        parts = os.path.splitext(tsv_file)[0].split('_')
-        task_name = parts[1] if len(parts) >= 2 else ''  # Extract task_name from part 1
-        run = parts[2] if len(parts) >= 3 else ''       # Extract run from part 2
-        processed_files.append({'task_name': task_name, 'run': run})
-
-    # Sort the processed files alphabetically by task_name and run
-    sorted_files = sorted(processed_files, key=lambda x: (x['task_name'], x['run']))
-
-    return jsonify({'tsv_files': sorted_files})
-
 @app.route('/get_images', methods=['GET'])
 def get_images():
     task_name = request.args.get('task_name')

@@ -11,7 +11,7 @@ cleanup() {
 # Trap interrupt signal (Ctrl+C)
 trap cleanup SIGINT
 
-python3 /home/blore005/course-project-bic/flask_backend/app/images.py &
+python3 /home/blore005/course-project-bic/flask_backend/images.py &
 
 # Store the PID of the background process
 pid_images=$!
