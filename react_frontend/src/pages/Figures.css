@@ -14,15 +14,15 @@
 }
 
 .fig-report .figures {
-  margin-top: 20px; /* Adjusted margin */
+  margin-top: 20px; 
 }
 
 .fig-report .subject-number {
   font-size: 30px;
-  margin-bottom: 10px; /* Added margin for better spacing */
+  margin-bottom: 10px; 
 }
 
-.fig-report .img-fluid {
+.fig-report object {
   margin-bottom: 20px; /* Add margin between images */
   max-width: 100%; /* Set maximum width to fit the container */
   max-height: 450px; /* Set maximum height */
