@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logoImg from '/home/blore005/course-project-bic/react_frontend/src/logo1.jpg';
+import logoImg from '../logo1.jpg';
 import './Header.css'; // Import CSS file for styling
 
 const Header = () => {

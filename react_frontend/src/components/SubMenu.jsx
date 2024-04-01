@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { RiArrowDownSFill, RiArrowUpSFill } from 'react-icons/ri';
 import { CiImageOn } from 'react-icons/ci';
 import { IoPersonOutline } from 'react-icons/io5';
-import { VscGraph } from 'react-icons/vsc'; // Import VscGraph icon
+import { VscGraph } from 'react-icons/vsc'; 
 
 const SidebarLink = styled(Link)`
   display: flex;

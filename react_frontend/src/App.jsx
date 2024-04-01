@@ -8,7 +8,6 @@ import Subjects from './pages/Subjects';
 import Figures from './pages/Figures';
 import SubjectView from './pages/PlotSubjectView';
 import TypeView from './pages/PlotType';
-import ThresholdSpike from './pages/ThresholdSpike';
 import PlotFilter from "./pages/PlotFilter";
 import FilterPlots from "./pages/FilterPlots";
 function App() {
@@ -19,7 +18,6 @@ function App() {
         <Route path='/' element={<DataPathForm />} />
         <Route path='/inputdata' element={<DataPathForm />} />
         <Route path='/home' element={<Layout><Home /></Layout>} />
-        <Route path='/thres-spike' element={<ThresholdSpike />} />
         <Route path='/subjects/:subjectFolder' element={<Layout><Subjects /></Layout>} />
         <Route path='/Figures/:task/:taskName' element={<Layout><Figures /></Layout>} />
         <Route path='/plots/subjects/:subjectFolder' element={<Layout><SubjectView /></Layout>} />
