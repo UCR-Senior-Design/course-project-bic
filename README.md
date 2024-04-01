@@ -61,21 +61,40 @@ Leave the passphrase empty.
 7. Add the public key to SSH keys on the GCP VM instance.
 8. Now you can connect to the VM by going to View/Command Palette again, typing in "Remote-SSH", and choosing "Connect to Host...". Choose your host. You can see that the connection was established successfully on the bottom left of the page.
 
+## Before Running Website
+
+### Adjusting `run.sh` Path
+
+Follow these steps to adjust the paths in the run.sh script:
+
+1. Open the run.sh file in a text editor.
+
+2. Modify the file paths to reflect the actual directory structure of your environment.
+
+3. Save the changes to the run.sh file.
+
+### Permission Changes
+
+Ensure that proper permissions are set to allow writing access to the directory where your data is stored. This is necessary for the website to create plots and store any generated files.
+
+To grant writing access to all users, you can execute the following command:
+
+```
+chmod o+wx /path/to/data/directory
+```
+
+This command grants write (w) and execute (x) permissions to others (o) for the specified directory.
+
 ## Running the Website
 
 To run the website, follow these steps:
 
-1. Open a terminal.
-2. Navigate to the directory where the website is located:
-
-```
-cd /home/blore005/course-project-bic
-```
-3. Run the script `run.sh`:
+1. Navigate to the directory where the website is located.
+2. Run the script `run.sh`:
 ```
 ./run.sh
 ```
-4. Once the website is running, you can access it by opening a web browser and navigating to the provided link. It will be under Vite.
+3. Once the website is running, you can access it by opening a web browser and navigating to the provided link. It will be under Vite.
 
 ## Issues Encountered and Solutions
 
@@ -99,6 +118,3 @@ cd /home/blore005/course-project-bic
   ```
   pip install -r requirements.txt
   ```
-
-
-
