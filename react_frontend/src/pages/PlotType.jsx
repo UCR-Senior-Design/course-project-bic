@@ -59,7 +59,7 @@ const Plot = () => {
                 <div key={index}>
                   <p>{plot.task} - {plot.run}</p>
                   <img
-                    src={`${baseURL}/${plot.path}`}
+                    src={`http://localhost:5000/static?file_path=${plot.path.substring(1)}`}
                     alt=""
                     className="img-fluid plot-image"
                   />

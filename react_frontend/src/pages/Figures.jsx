@@ -129,7 +129,7 @@ const Figures = () => {
             {renderSubjectHeader(path, index)}
             {renderRunNumber(path)}
             <img
-              src={`${baseURL}/${path}`}
+              src={`http://localhost:5000/static?file_path=${path}`}
               alt=""
               className="img-fluid"
             />

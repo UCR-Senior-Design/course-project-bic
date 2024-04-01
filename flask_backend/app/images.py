@@ -40,17 +40,18 @@ def set_data_path():
         return jsonify({'error': 'Data path not provided'}), 400
 
 
-@app.route('/static/<path:file_path>')
-def serve_static(file_path):
+@app.route('/static')
+def serve_static():
     global base_path 
-    if base_path:
+    file_path = request.args.get('file_path')
+    if file_path:
         full_path = os.path.join(base_path, file_path)
         if os.path.exists(full_path):
             return send_file(full_path)
         else:
             return jsonify({'error': 'File not found'}), 404
     else:
-        return jsonify({'error': 'Data path is not set'}), 400
+        return jsonify({'error': 'File path not provided'}), 400
 
 @app.route('/api/subjects')
 def get_subjects():

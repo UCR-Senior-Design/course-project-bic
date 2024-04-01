@@ -53,7 +53,7 @@ const Plot = () => {
             {plots.map((plot, index) => (
               <div key={index} className="plots">
                 <img
-                  src={`${baseURL}/${plot.path}`}
+                  src={`http://localhost:5000/static?file_path=${plot.path.substring(1)}`}
                   alt=""
                   className="img-fluid plot-image"
                 />
