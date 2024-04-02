@@ -26,10 +26,11 @@ const DataPathForm = () => {
             navigate('/home'); // Use navigate to go to the /home route
         } catch (error) {
             setMessage('');
-            if (error.response && error.response.data && error.response.data.error === 'No subjects') {
-                setError('Specified directory does not contain any subject folders.'); // Set the specific error message
+            if (error.response && error.response.data) {
+                const errorMessage = error.response.data.error;
+                setError(errorMessage);
             } else {
-                setError('Specified directory does not exist.'); // Set the generic error message
+                setError('An unexpected error occurred.'); // Set a generic error message
             }
         }
     };
