@@ -75,7 +75,7 @@ Follow these steps to adjust the paths in the run.sh script:
 
 ### Permission Changes
 
-Ensure that proper permissions are set to allow writing access to the directory where your data is stored. This is necessary for the website to create plots and store any generated files.
+Ensure that proper permissions are set to allow writing access to the directory where your fMRIprep outputs are stored. This is necessary for the website to create plots and store any generated files.
 
 To grant writing access to all users, you can execute the following command:
 
@@ -84,6 +84,10 @@ chmod o+wx /path/to/data/directory
 ```
 
 This command grants write (w) and execute (x) permissions to others (o) for the specified directory.
+
+### Create Folder
+
+Create a folder named "tmp" in the fMRIprep output directory before running the threshold/spike function. This is necessary for the function to work correctly.
 
 ## Running the Website
 
