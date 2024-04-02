@@ -322,7 +322,6 @@ def get_plots_by_type(plot_type):
 
     return jsonify({'plots_paths': matching_plots})
 
-
 def filter_plot(magnitude=1.0, threshold=0.5, max_spikes=None):
     #base_path = '/home/blore005/data/derivatives'
     if base_path is None:

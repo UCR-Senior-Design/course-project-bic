@@ -1,11 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Alert } from 'react-bootstrap';
-import { useParams } from 'react-router-dom';
 import './PlotFilter.css'
-
-
-
-
 
 function PlotFilter(){
   //Default inputs
@@ -21,17 +16,7 @@ function PlotFilter(){
  // const [numSpikes, setNumSpikes] = useState(defaultSpike);
   const [maxSpikes, setMaxSpikes] = useState(defaultSpike);
   const [plots, setPlots] = useState([]);
-  const baseURL = 'http://localhost:8080';
   const [error, setError] = useState('');
-  //const [imageUrl, setImageUrl] = useState('');
-  // Define a default threshold value
-
-
-  //const [selectedColumn, setSelectedColumn] = useState('');
- // const [selectedDataset, setSelectedDataset] = useState('');
-
-  // Example options for columns and datasets
-   // Fetch subjects on component mount
 
   
   const handleSubmit = (event) => {
@@ -52,54 +37,58 @@ function PlotFilter(){
       });
   }
 
-  
   return (
-    <Container className="boxed">
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className="plot-filter-container">
+      <Container>
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
 
-        <label>
-          Magnitude:
-          <input type="number" value={magnitude} onChange={(e) => setMagnitude(e.target.value)} step="0.1" />
-        </label>
-        <br />
-        <label>
-          Threshold:
-          <input type="number" value={threshold} onChange={(e) => setThreshold(e.target.value)} step="0.1" />
-        </label>
-        <br />
-    <label>
-      View Plots with Spikes More than:
-      <input type="number" value={maxSpikes} onChange={(e) => setMaxSpikes(e.target.value)} />
-    </label>
-<br />
-<button type="submit" disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Submit'}
-        </button>
-      </form>
+            <label>
+              Magnitude:
+              <input type="number" value={magnitude} onChange={(e) => setMagnitude(e.target.value)} step="0.1" />
+            </label>
+            <br />
+            <label>
+              Threshold:
+              <input type="number" value={threshold} onChange={(e) => setThreshold(e.target.value)} step="0.1" />
+            </label>
+            <br />
+            <label>
+              View Plots with Spikes More than:
+              <input type="number" value={maxSpikes} onChange={(e) => setMaxSpikes(e.target.value)} />
+            </label>
+            <br />
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? 'Loading...' : 'Submit'}
+            </button>
+          </form>
+        </div>
 
-      {isLoading && (
-        <div>Loading plots...</div> // You can replace this with a spinner or any loading indicator you prefer
-      )}
-      <div>
-      {!isLoading && (
-            <div className="plots">
-            {plots.length > 0 ? (
-              plots.map((plot, index) => (
-                <div key={index}>
+        {isLoading && (
+          <div className="loading-indicator">
+            Loading plots... {/* You can replace this with a spinner or any loading indicator you prefer */}
+          </div>
+        )}
+
+        <div className="plots-container">
+          {!isLoading && plots.length > 0 ? (
+            plots.map((plot, index) => (
+              <div key={index}>
                 <p>{plot.subject} - {plot.task} - {plot.run}</p>
-                  <img
-                    src={`${baseURL}/${plot.path}`}
-                    alt=""
-                    className="img-fluid plot-image"
-                  />
-                  </div>
-                ))): (<p>No plots to display.</p>)}
-            </div>
-      )}
-      </div>
+                <img
+                  src={`http://localhost:5000/static?file_path=${plot.path.substring(1)}`}
+                  alt=""
+                  className="img-fluid plot-image"
+                />
+              </div>
+            ))
+          ) : (
+            <p>No plots to display.</p>
+          )}
+        </div>
+        
+      </Container>
     </div>
-    </Container>
   );
 }
 
